@@ -8,7 +8,8 @@
 
   let map;
 
-async function initMap() {
+export async function initMap() {
+  
   const { Map } = await google.maps.importLibrary("maps");
   // The location of Paris
   const position = { lat: 48.866, lng: 2.333 };
@@ -42,5 +43,3 @@ async function initMap() {
 }
 
 initMap();
-
-
