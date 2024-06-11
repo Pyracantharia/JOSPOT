@@ -1,4 +1,4 @@
-import { initMap } from "./map.js";
+import { initMap } from "./map/map.js";
 
 const root = document.getElementById("root");
 
