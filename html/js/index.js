@@ -43,6 +43,12 @@ function Page1() {
     container.appendChild(divMap);
     container.appendChild(divIntro);
 
+    divIntro.addEventListener('animationend', (event) => {
+        if (event.animationName === 'fadeOut') {
+            divIntro.remove();
+        }
+    });
+
     return container;
 }
 
