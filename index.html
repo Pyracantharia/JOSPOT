@@ -1,18 +1,29 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-    <title>Home</title>
-    <!-- include JS -->
-    <script src="js/index.js"></script>
+  <title>Home</title>
+  <!-- include JS -->
+  <script src="js/index.js"></script>
+  <link rel="stylesheet" href="style.css">
+
 </head>
 
 <body>
-    <!-- <h1>Home</h1> -->
-    <div class="container" style="display: flex">
-      <p>Welcome to the home page.</p>
-      <div id="map" style="height: 100vh; width: 100%;"></div>
+  <!-- <h1>Home</h1> -->
+  <div class="container" id="container">
+  <p>Welcome to the home page.</p>
+    <div id="map" style="height: 100vh; width: 100%;"></div>
+    <div class="fadeInLogo" id="logo">
+      <img src="langfr.svg" alt="Lang FR">
     </div>
-    
+    <p class="fadeInText" id="text">Rechercher les meilleurs emplacements</p>
+  </div>
+
+
 </body>
 <script src="./js/index.js"></script>
+<script src="./js/animation.js"></script>
+
+
 </html>
