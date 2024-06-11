@@ -1,0 +1,47 @@
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+@keyframes fadeOut {
+    0% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
+}
+
+.intro {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.9); /* Semi-transparent background */
+    font-size: 50px;
+    font-family: 'Roboto', sans-serif;
+    color: #000000;
+    opacity: 0; /* Start hidden */
+    z-index: 10; /* Ensure it's on top */
+}
+
+.fadeInLogo {
+    opacity: 0;
+    animation: fadeIn 1s forwards;
+    animation-delay: 1s; /* Delay the logo animation */
+}
+
+.fadeInText {
+    opacity: 0;
+    animation: fadeIn 1s forwards;
+    animation-delay: 2s; /* Delay the text animation */
+}
