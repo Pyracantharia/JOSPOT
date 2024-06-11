@@ -2,43 +2,55 @@ import { initMap } from "./map.js";
 
 const root = document.getElementById("root");
 
-function initializeMap(containerId) {
-    const container = document.getElementById(containerId);
-    if (container) {
-        const mapDiv = document.createElement('div');
-        mapDiv.id = 'map';
-        mapDiv.style.height = '100vh';
-        mapDiv.style.width = '100%';
-        container.appendChild(mapDiv);
 
-    }
-}
+function Page1() {
 
+    const container = document.createElement("div");
+    container.style.position = "relative";
+    container.style.height = "100vh";
 
+    // Création de divIntro
+    const divIntro = document.createElement("div");
+    divIntro.className = "intro";
+    divIntro.id = "intro";
 
-function Page1(){
-    const h1 = document.createElement("h1");
-    const title = document.createTextNode("Hello c'est la page 1");
-    h1.appendChild(title);
+    const divLogo = document.createElement("div");
+    divLogo.className = "fadeInLogo";
+    divLogo.id = "logo";
 
-    // Génére une div contenant le h1 et une div avec un id map
-    const div = document.createElement("div");
-    div.appendChild(h1);
+    const img = document.createElement("img");
+    img.src = "https://upload.wikimedia.org/wikipedia/fr/6/68/Logo_JO_d%27%C3%A9t%C3%A9_-_Paris_2024.svg";
+    img.alt = "Lang FR";
+
+    divLogo.appendChild(img);
+
+    const p = document.createElement("p");
+    p.className = "fadeInText";
+    p.id = "text";
+    const textNode = document.createTextNode("Rechercher les meilleurs emplacements");
+    p.appendChild(textNode);
+
+    divIntro.appendChild(divLogo);
+    divIntro.appendChild(p);
+
+    // Création de divMap
     const divMap = document.createElement("div");
     divMap.id = "map";
     divMap.style.height = "100vh";
     divMap.style.width = "100%";
-    div.appendChild(divMap);
-    
 
-    return div;
+    // Ajout de divMap et divIntro au container
+    container.appendChild(divMap);
+    container.appendChild(divIntro);
+
+    return container;
 }
 
-Page1.onMount = function(){
+Page1.onMount = function () {
     initMap("map");
 }
 
-function Page404(){
+function Page404() {
     const h1 = document.createElement("h1");
     const title = document.createTextNode("Page 404");
     h1.appendChild(title);
@@ -65,14 +77,14 @@ function BrowserRouter(rootElement, routes) {
 
     const elementGenerator = managePath();
     rootElement.appendChild(elementGenerator());
-    if (elementGenerator.onMount){
+    if (elementGenerator.onMount) {
         elementGenerator.onMount();
     }
 
     window.addEventListener("popstate", function () {
         const elementGenerator = managePath;
         rootElement.replaceChild(managePath, rootElement.childNodes[0]);
-        if (elementGenerator.onMount){
+        if (elementGenerator.onMount) {
             elementGenerator.onMount();
         }
     });
