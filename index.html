@@ -1,18 +1,124 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Home</title>
-    <!-- include JS -->
-    <script src="js/index.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="img/logo.svg">
+  <title>Home</title>
+  <script type="module" defer src="js/index.js"></script>
+   <!-- <script defer src="js/interactivity.js"></script> -->
+  <link rel="stylesheet" href="index.css">
 </head>
+<body class="">
+  <!-- <h1>Home</h1> -->
+  <div class="wrapper w-screen h-screen relative">
+    <!-- Div qui accueille la map -->
+    <div id="map" class="w-full h-full bg-blue-500"></div>
 
-<body>
-    <!-- <h1>Home</h1> -->
-    <div class="container" style="display: flex">
-      <p>Welcome to the home page.</p>
-      <div id="map" style="height: 100vh; width: 100%;"></div>
-    </div>
-    
+    <section id="events-section" class="absolute bottom-0 translate-y-[100%] bg-white w-full p-3 transition-all sm:top-0 sm:translate-y-0 sm:left-0 sm:w-fit sm:translate-x-[-100%]">
+
+      <div id="burger-menu-mobile" class="w-12 h-12 absolute top-[-20%] right-[30px] flex justify-center items-center bg-white rounded-full p-3 sm:hidden">
+        <div id="event-toggler-mobile" class="relative w-[30px] h-[12px]">
+          <span class="stripe w-full h-[2px] rounded-full bg-gray-500 transition-all absolute top-0"></span>
+          <span class="stripe w-full h-[2px] rounded-full bg-gray-500 transition-all absolute top-1/2"></span>
+          <span class="stripe w-full h-[2px] rounded-full bg-gray-500 transition-all absolute top-full"></span>
+        </div>
+      </div>
+
+      <div id="burger-menu-desktop" class="hidden w-12 h-12 absolute top-[-20%] right-[30px] sm:flex justify-center items-center bg-white rounded-full p-3 sm:top-[20px] sm:right-[-70px]">
+        <div id="event-toggler-desktop" class="relative w-[30px] h-[12px]">
+          <span class="stripe w-full h-[2px] rounded-full bg-gray-500 transition-all absolute top-0"></span>
+          <span class="stripe w-full h-[2px] rounded-full bg-gray-500 transition-all absolute top-1/2"></span>
+          <span class="stripe w-full h-[2px] rounded-full bg-gray-500 transition-all absolute top-full"></span>
+        </div>
+      </div>
+
+      <h2 class="font-medium text-[18px] text-center mb-5 sm:my-6">Tout les évènements</h2>
+
+      <div class="events-head flex justify-around items-center mb-5">
+        <form action="" method="post">
+           <div class="searchbox border p-2 rounded-full flex justify-between items-center">
+             <input type="input" name="" id="" placeholder="Rechercher" class=" w-32 focus:outline-none">
+             <img src="img/search.svg" alt="">
+             <button type="submit" hidden></button>
+           </div>
+        </form>
+        <select name="filtres" id="filtres" class="border rounded-full p-[6px]">
+          <option value="" selected disabled >filtrer</option>
+          <option value="Natation">Natation</option>
+          <option value="Basket">Basket</option>
+          <option value="foot">foot</option>
+        </select>
+      </div>
+
+      <div class="events-container h-[400px] flex flex-col items-center gap-5 overflow-y-auto sm:relative sm:h-[650px] scrollbar-thin">
+        <div class="event-item p-2 border rounded-md w-[90%]">
+          <div class="flex mb-2 justify-between">
+              <div class="event-description mr-2">
+                <h3 class="mb-3">Natation - 14h00</h3>
+                <p class="text-xs text-gray-400 mb-2">Centre Aquatique Olympique</p>
+                <p class="text-xs text-gray-400 mb-2">Bordeaux</p>
+              </div>
+              <div class="event-img w-[120px] h-full rounded-md overflow-hidden">
+                <img src="img/swimming.jpg" alt="natation" class="object-center object-cover">
+              </div>
+          </div>
+          <p class="text-xs text-gray-400 text-right">30/07/24</p>
+        </div>
+        <div class="event-item p-2 border rounded-md w-[90%]">
+          <div class="flex mb-2 justify-between">
+              <div class="event-description mr-2">
+                <h3 class="mb-3">Basket - 14h30</h3>
+                <p class="text-xs text-gray-400 mb-2">Gymnase Olympique</p>
+                <p class="text-xs text-gray-400 mb-2">Paris</p>
+              </div>
+              <div class="event-img w-[120px] h-full rounded-md overflow-hidden">
+                <img src="img/basket.jpg" alt="basketball" class="object-center object-cover">
+              </div>
+          </div>
+          <p class="text-xs text-gray-400 text-right">30/07/24</p>
+        </div>
+        <div class="event-item p-2 border rounded-md w-[90%]">
+          <div class="flex mb-2 justify-between">
+              <div class="event-description mr-2">
+                <h3 class="mb-3">Handball - 18h00</h3>
+                <p class="text-xs text-gray-400 mb-2">Gymnase Olympique</p>
+                <p class="text-xs text-gray-400 mb-2">Paris</p>
+              </div>
+              <div class="event-img w-[120px] h-full rounded-md overflow-hidden">
+                <img src="img/handball.jpg" alt="basketball" class="object-center object-cover">
+              </div>
+          </div>
+          <p class="text-xs text-gray-400 text-right">30/07/24</p>
+        </div>
+        <div class="event-item p-2 border rounded-md w-[90%]">
+          <div class="flex mb-2 justify-between">
+              <div class="event-description mr-2">
+                <h3 class="mb-3">Handball - 18h00</h3>
+                <p class="text-xs text-gray-400 mb-2">Gymnase Olympique</p>
+                <p class="text-xs text-gray-400 mb-2">Paris</p>
+              </div>
+              <div class="event-img w-[120px] h-full rounded-md overflow-hidden">
+                <img src="img/handball.jpg" alt="basketball" class="object-center object-cover">
+              </div>
+          </div>
+          <p class="text-xs text-gray-400 text-right">30/07/24</p>
+        </div>
+        <div class="event-item p-2 border rounded-md w-[90%]">
+          <div class="flex mb-2 justify-between">
+              <div class="event-description mr-2">
+                <h3 class="mb-3">Handball - 18h00</h3>
+                <p class="text-xs text-gray-400 mb-2">Gymnase Olympique</p>
+                <p class="text-xs text-gray-400 mb-2">Paris</p>
+              </div>
+              <div class="event-img w-[120px] h-full rounded-md overflow-hidden">
+                <img src="img/handball.jpg" alt="basketball" class="object-center object-cover">
+              </div>
+          </div>
+          <p class="text-xs text-gray-400 text-right">30/07/24</p>
+        </div>
+      </div>
+    </section>
+  </div>
 </body>
-<script src="./js/index.js"></script>
 </html>
