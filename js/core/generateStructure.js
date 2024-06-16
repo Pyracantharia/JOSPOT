@@ -36,3 +36,4 @@ export default function generateStructure(structure) {
 	}
 	return elem;
 }
+
