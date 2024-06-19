@@ -1,5 +1,3 @@
-//gérer les addEventListeners
-
 export default function HomePage(){
     return {
         //wrapper
@@ -8,6 +6,58 @@ export default function HomePage(){
             class: "wrapper w-screen h-screen relative".split(' ')
         },
         children: [
+            //div de l'animation
+            {
+                tag: "div",
+                attributes: {
+                    id: 'intro',
+                    class: 'intro'.split(' '),
+                },
+                events: {
+                    animationLaunch: function() {
+                        const intro = this;
+
+                        // Fade in the container immediately
+                        intro.style.opacity = 1;
+
+                        // Fade out the entire container after the animations
+                        setTimeout(() => {
+                            intro.style.animation = "fadeOut 2s forwards";
+                        }, 2500); 
+                    },
+                    animationend: function (event) {
+                        if(event.animationName === 'fadeOut'){
+                            this.remove();
+                        }
+                    }
+                },
+                children: [
+                    {
+                        tag: "div",
+                        attributes: {
+                            id: "logo",
+                            class: "fadeInLogo".split(' ')
+                        },
+                        children: [
+                            {
+                                tag: "img",
+                                attributes: {
+                                    src: "https://upload.wikimedia.org/wikipedia/fr/6/68/Logo_JO_d%27%C3%A9t%C3%A9_-_Paris_2024.svg",
+                                    alt: "Lang FR"
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        tag: "p",
+                        attributes: {
+                            id: 'text',
+                            class: "fadeInText".split(' ')
+                        },
+                        children: "Rechercez les meilleurs emplacements"
+                    }
+                ]
+            },
             {
                 //div qui accueille la map
                 tag: "div",

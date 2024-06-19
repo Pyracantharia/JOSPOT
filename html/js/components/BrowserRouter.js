@@ -1,5 +1,10 @@
 import generateStructure from "../core/generateStructure.js";
 
+/**
+ * Just a router (need a web server in order to work though)
+ * @param {*} rootElement 
+ * @param {*} routes 
+ */
 export default function BrowserRouter(rootElement, routes) {
 //const oldPushState = window.history.pushState;
 //window.history.pushState = function (data, title, url) {

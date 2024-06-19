@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "watch": "tailwindcss -i ./main.css -o ./index.css --watch"
+    "watch": "tailwindcss -i css/entrypoint.css -o css/index.css --watch"
   },
   "author": "",
   "license": "ISC",
