@@ -22,7 +22,15 @@ export default function HomePage(){
                 tag: "section",
                 attributes: {
                     id: "events-section",
-                    class: "absolute bottom-0 translate-y-[100%] bg-white w-full p-3 transition-all sm:top-0 sm:translate-y-0 sm:left-0 sm:w-fit sm:translate-x-[-100%]".split(' ')
+                    class: "absolute bottom-0 bg-white w-full p-3 transition-all sm:top-0 sm:translate-y-0 sm:left-0 sm:w-fit sm:translate-x-[-100%] translate-y-[100%]".split(' ')
+                },
+                events: {
+                    toggleMobile: function () {
+                        this.classList.toggle("translate-y-[100%]");
+                    },
+                    toggleDesktop: function () {
+                        this.classList.toggle("sm:translate-x-[-100%]");
+                    },
                 },
                 children: [
                     {
@@ -32,12 +40,26 @@ export default function HomePage(){
                             id: "burger-menu-mobile",
                             class: "w-12 h-12 absolute top-[-20%] right-[30px] flex justify-center items-center bg-white rounded-full p-3 sm:hidden".split(' ')
                         },
+                        events: {
+                            click: function () {
+                                const eventTogglerMobile = this.children[0];
+                                const spanElements = eventTogglerMobile.children;
+                                
+                                for(const span of spanElements){
+                                    span.classList.toggle("touch-active");
+                                };
+                                const parentNode = this.parentNode;
+                                const toggleMobileEvent = new CustomEvent("toggleMobile");
+                                parentNode.dispatchEvent(toggleMobileEvent);
+                                
+                            },
+                        },
                         children: [
                             {
                                 tag: "div",
                                 attributes: {
                                     id: "event-toggler-mobile",
-                                    class: "relative w-[30px] h-[12px]"
+                                    class: "relative w-[30px] h-[12px]".split(' ')
                                 },
                                 children: [
                                     {
@@ -69,12 +91,26 @@ export default function HomePage(){
                             id: "burger-menu-desktop",
                             class: "hidden w-12 h-12 absolute top-[-20%] right-[30px] sm:flex justify-center items-center bg-white rounded-full p-3 sm:top-[20px] sm:right-[-70px]".split(' ')
                         },
+                        events: {
+                            click: function () {
+                                const eventTogglerDesktop = this.children[0];
+                                const spanElements = eventTogglerDesktop.children;
+                                
+                                for(const span of spanElements){
+                                    span.classList.toggle("touch-active");
+                                };
+                                const parentNode = this.parentNode;
+                                const toggleDesktopEvent = new CustomEvent("toggleDesktop");
+                                parentNode.dispatchEvent(toggleDesktopEvent);
+                                
+                            },
+                        },
                         children: [
                             {
                                 tag: "div",
                                 attributes: {
                                     id: "event-toggler-desktop",
-                                    class: "relative w-[30px] h-[12px]"
+                                    class: "relative w-[30px] h-[12px]".split(' ')
                                 },
                                 children: [
                                     {
@@ -131,7 +167,7 @@ export default function HomePage(){
                                             {
                                                 tag: "input",
                                                 attributes: {
-                                                    class: "w-32 focus:outline-none",
+                                                    class: "w-32 focus:outline-none".split(' '),
                                                     type: "input",
                                                     name: "",
                                                     placeholder: "Rechercher"
@@ -221,14 +257,14 @@ export default function HomePage(){
                         //event list
                         tag: "div",
                         attributes: {
-                            class: "events-container h-[400px] flex flex-col items-center gap-5 overflow-y-auto sm:relative sm:h-[650px] scrollbar-thin".split('')
+                            class: "events-container h-[400px] flex flex-col items-center gap-5 overflow-y-auto sm:relative sm:h-[650px] scrollbar-thin".split(' ')
                         },
                         children: [
                             {
                                 //event item
                                 tag: "div",
                                 attributes: {
-                                    class: "event-item p-2 border rounded-md w-[90%]".split('')
+                                    class: "event-item p-2 border rounded-md w-[90%]".split(' ')
                                 },
                                 children: [
                                     {
@@ -301,5 +337,5 @@ export default function HomePage(){
                 ]
             }
         ]
-    }
+    };
 }
