@@ -1,0 +1,17 @@
+{
+  "name": "jospot",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "watch": "tailwindcss -i css/entrypoint.css -o css/index.css --watch"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "tailwindcss": "^3.4.4"
+  },
+  "dependencies": {
+    "tailwind-scrollbar": "^3.1.0"
+  }
+}
