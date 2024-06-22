@@ -2,6 +2,7 @@ import BrowserRouter from "./components/BrowserRouter.js";
 import routes from "./routes.js";
 import { initMap } from "./map.js";
 
+
 const root = document.getElementById("root");
 
 document.addEventListener("DOMContentLoaded", () => {
