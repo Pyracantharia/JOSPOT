@@ -1,10 +1,10 @@
-export default function generateMarkers(siteInfos, map, AdvancedMarkerElement) {
-    siteInfos.forEach(site => {
-        if (site.latitude && site.longitude) {
+export default function generateMarkers(events, map, AdvancedMarkerElement) {
+    events.forEach(event => {
+        if (event.latitude && event.longitude) {
             new AdvancedMarkerElement({
                 map: map,
-                position: { lat: site.latitude, lng: site.longitude },
-                title: site.location
+                position: { lat: event.latitude, lng: event.longitude },
+                title: event.location
             });
         }
     });

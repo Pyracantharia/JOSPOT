@@ -17,7 +17,7 @@
 	key: "AIzaSyCwRlYsm_3KSv8r8or-DLKZV8f3rDWdLpo",
 });
 
-import SitesCompetition from "./views/SitesCompetition.js";
+import allEvents from "./data/SportsEvents.js";
 import showNearestEventPopUp from "./components/Pop.js";
 import generateSeineRiverPath from './components/River.js';
 import addGeolocationButton from './components/GeolocationButton.js';
@@ -32,7 +32,7 @@ export async function initMap() {
     const { AdvancedMarkerElement } = await google.maps.importLibrary("marker");
 
     // Fetch siteInfos from SitesCompetition
-    const siteInfos = await SitesCompetition();
+    const events = await allEvents();
 
 
     const zoom = 6;
@@ -59,13 +59,9 @@ export async function initMap() {
 
 
 
-    generateMarkers(siteInfos, map, AdvancedMarkerElement); // Pass AdvancedMarkerElement as a parameter
-    generateLogicalBestSpots(siteInfos, map);
+    generateMarkers(events, map, AdvancedMarkerElement); // Pass AdvancedMarkerElement as a parameter
+    generateLogicalBestSpots(events, map);
     generateSeineRiverPath(map);
     addGeolocationButton(map);
     await showNearestEventPopUp();
 }
-
-
-window.initMap = initMap;
-

@@ -1,4 +1,4 @@
-import SitesCompetition from "../views/SitesCompetition.js";
+import allEvents from "../data/SportsEvents.js";
 
 export default async function showNearestEventPopUp() {
     const nearestEvent = await getNearestEvent();
@@ -20,11 +20,11 @@ export default async function showNearestEventPopUp() {
 
 
 async function getNearestEvent() {
-    const siteInfos = await SitesCompetition();
+    const events = await allEvents();
     const currentDate = new Date();
 
     // Filtrer les événements futurs et les trier par date
-    const futureEvents = siteInfos.filter(event => new Date(event.starting_date) >= currentDate);
+    const futureEvents = events.filter(event => new Date(event.starting_date) >= currentDate);
     futureEvents.sort((a, b) => new Date(a.starting_date) - new Date(b.starting_date));
 
     return futureEvents[0]; // L'événement le plus proche
