@@ -937,6 +937,10 @@ video {
   width: 100vw;
 }
 
+.max-w-\[300px\]{
+  max-width: 300px;
+}
+
 .flex-shrink{
   flex-shrink: 1;
 }
@@ -2069,6 +2073,10 @@ video {
   padding: 6px;
 }
 
+.pb-3{
+  padding-bottom: 0.75rem;
+}
+
 .text-left{
   text-align: left;
 }
@@ -2145,6 +2153,10 @@ video {
 
 .font-medium{
   font-weight: 500;
+}
+
+.font-semibold{
+  font-weight: 600;
 }
 
 .uppercase{
