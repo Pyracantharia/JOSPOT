@@ -6,6 +6,8 @@ export default function SitesCompetition() {
       return data.slice(0, 15).map(result => {
         return {
           longitude: result.geolocation ? result.geolocation.lon : null,
+          starting_date : result.starting_date,
+          ending_date : result.ending_date,
           latitude: result.geolocation ? result.geolocation.lat : null,
           location: result.location
         };

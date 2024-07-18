@@ -18,7 +18,6 @@
 	// Add other bootstrap parameters as needed, using camel case.
 	// Use the 'v' parameter to indicate the version to load (alpha, beta, weekly, etc.)
 });
-
 import SitesCompetition from "./views/SitesCompetition.js";
 
 let map, infoWindow;
@@ -27,7 +26,6 @@ export async function initMap() {
 	const { Map } = await google.maps.importLibrary("maps");
 	const { AdvancedMarkerElement } = await google.maps.importLibrary("marker");
 
-	// Fetch siteInfos from SitesCompetition
 	const siteInfos = await SitesCompetition();
 
 	function generateMarkers(siteInfos, map) {
@@ -96,7 +94,6 @@ export async function initMap() {
 	generateMarkers(siteInfos, map);
 	generateLogicalBestSpots(siteInfos, map);
 
-	// Add Geolocation Button
 	infoWindow = new google.maps.InfoWindow();
 	const locationButton = document.createElement("button");
 
@@ -106,7 +103,7 @@ export async function initMap() {
 	locationButton.addEventListener("click", () => {
 		if (navigator.geolocation) {
 			navigator.geolocation.getCurrentPosition(
-				(position) => {
+				async (position) => {
 					const pos = {
 						lat: position.coords.latitude,
 						lng: position.coords.longitude,
@@ -116,6 +113,9 @@ export async function initMap() {
 					infoWindow.setContent("Vous êtes ici.");
 					infoWindow.open(map);
 					map.setCenter(pos);
+
+					// Afficher la pop-up après que la position a été obtenue
+					await showNearestEventPopUp(pos);
 				},
 				() => {
 					handleLocationError(true, infoWindow, map.getCenter());
@@ -125,6 +125,28 @@ export async function initMap() {
 			handleLocationError(false, infoWindow, map.getCenter());
 		}
 	});
+
+	// Afficher la pop-up après le chargement de la carte
+	if (navigator.geolocation) {
+		navigator.geolocation.getCurrentPosition(
+			async (position) => {
+				const pos = {
+					lat: position.coords.latitude,
+					lng: position.coords.longitude,
+				};
+
+				map.setCenter(pos);
+
+				// Afficher la pop-up après que la position a été obtenue
+				await showNearestEventPopUp(pos);
+			},
+			() => {
+				handleLocationError(true, infoWindow, map.getCenter());
+			}
+		);
+	} else {
+		handleLocationError(false, infoWindow, map.getCenter());
+	}
 }
 
 function handleLocationError(browserHasGeolocation, infoWindow, pos) {
@@ -135,6 +157,48 @@ function handleLocationError(browserHasGeolocation, infoWindow, pos) {
 			: "Error: Votre navigateur ne prend pas en charge la géolocalisation.",
 	);
 	infoWindow.open(map);
+}
+
+async function showNearestEventPopUp(pos) {
+	const nearestEvent = await getNearestEvent();
+	const distance = calculateDistance(pos.lat, pos.lng, nearestEvent.latitude, nearestEvent.longitude);
+
+	const popUp = document.createElement("div");
+	popUp.classList.add("event-pop-up");
+	popUp.innerHTML = `
+        <h2>Événement à venir le plus proche</h2>
+        <p><strong>Lieu:</strong> ${nearestEvent.location}</p>
+        <p><strong>Date de début:</strong> ${new Date(nearestEvent.starting_date).toLocaleString()}</p>
+        <p><strong>Distance:</strong> ${distance.toFixed(2)} km</p>
+        <button id="close-pop-up">Fermer</button>
+    `;
+	document.body.appendChild(popUp);
+
+	document.getElementById("close-pop-up").addEventListener("click", () => {
+		document.body.removeChild(popUp);
+	});
+}
+
+function calculateDistance(lat1, lon1, lat2, lon2) {
+	const R = 6371; // Rayon de la Terre en km
+	const dLat = (lat2 - lat1) * Math.PI / 180;
+	const dLon = (lon2 - lon1) * Math.PI / 180;
+	const a =
+		0.5 - Math.cos(dLat) / 2 +
+		Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
+		(1 - Math.cos(dLon)) / 2;
+	return R * 2 * Math.asin(Math.sqrt(a));
+}
+
+async function getNearestEvent() {
+	const siteInfos = await SitesCompetition();
+	const currentDate = new Date();
+
+	// Filtrer les événements futurs et les trier par date
+	const futureEvents = siteInfos.filter(event => new Date(event.starting_date) >= currentDate);
+	futureEvents.sort((a, b) => new Date(a.starting_date) - new Date(b.starting_date));
+
+	return futureEvents[0]; // L'événement le plus proche
 }
 
 window.initMap = initMap;
