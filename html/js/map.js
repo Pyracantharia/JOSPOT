@@ -21,7 +21,7 @@
 
 import SitesCompetition from "./views/SitesCompetition.js";
 
-let map;
+let map, infoWindow;
 
 export async function initMap() {
 	const { Map } = await google.maps.importLibrary("maps");
@@ -42,23 +42,21 @@ export async function initMap() {
 		});
 	}
 
-
 	function generateLogicalBestSpots(siteInfos, map) {
 		const createRandomPointInRadius = (lat, lng, radius) => {
 			const getRandomOffset = (max) => (Math.random() - 0.5) * max;
-	
-			// Approximation : 1 degré de latitude = ~111 km, 1 degré de longitude = ~111 km * cos(latitude)
+
 			const latOffset = getRandomOffset(radius / 111);
 			const lngOffset = getRandomOffset(radius / (111 * Math.cos(lat * Math.PI / 180)));
-	
+
 			return { lat: lat + latOffset, lng: lng + lngOffset };
 		};
-	
-		const radiusInKm = 0.5; // sert a determiner le rayon de recherche des spots
-	
+
+		const radiusInKm = 0.5;
+
 		siteInfos.forEach(site => {
 			if (site.latitude && site.longitude) {
-				for (let i = 0; i < 3; i++) { 
+				for (let i = 0; i < 3; i++) {
 					const randomPoint = createRandomPointInRadius(site.latitude, site.longitude, radiusInKm);
 					new google.maps.Marker({
 						map: map,
@@ -66,7 +64,7 @@ export async function initMap() {
 						title: "Best Spot",
 						icon: {
 							url: '../img/Best_pin_point.svg',
-							scaledSize: new google.maps.Size(24, 24) // taille de l'icone
+							scaledSize: new google.maps.Size(24, 24)
 						}
 					});
 				}
@@ -74,14 +72,9 @@ export async function initMap() {
 		});
 	}
 
-
-	// const zoom = 6;
-	// const center = { lat: 47.700000, lng: 2.633333 }
-  
-	// const zoom = 6;
-	// const center = { lat: 47.700000, lng: 2.633333 }
 	const zoom = 15;
 	const center = { lat: 48.863778, lng: 2.316556 };
+
 	const bounds = {
 		north: center.lat + 6,
 		south: center.lat - 6,
@@ -97,12 +90,13 @@ export async function initMap() {
 			latLngBounds: bounds,
 			strictBounds: false
 		},
-		mapId: "f1e6188476cdfda9", // important to enable the use of markers
-		streetViewControl: false // Disable Pegman control
+		mapId: "f1e6188476cdfda9",
+		streetViewControl: false
 	});
 
 	generateMarkers(siteInfos, map);
 	generateLogicalBestSpots(siteInfos, map);
+
 
 	// Adding the path of the seine river
 	const flightPlanCoordinates = [
@@ -177,8 +171,45 @@ export async function initMap() {
 // 48°51'49.6"N 2°18'59.6"E
 // 48.863778, 2.316556
 
+	// Add Geolocation Button
+	infoWindow = new google.maps.InfoWindow();
+	const locationButton = document.createElement("button");
 
+	locationButton.textContent = "Se localiser";
+	locationButton.classList.add("custom-map-control-button");
+	map.controls[google.maps.ControlPosition.TOP_CENTER].push(locationButton);
+	locationButton.addEventListener("click", () => {
+		if (navigator.geolocation) {
+			navigator.geolocation.getCurrentPosition(
+				(position) => {
+					const pos = {
+						lat: position.coords.latitude,
+						lng: position.coords.longitude,
+					};
 
+					infoWindow.setPosition(pos);
+					infoWindow.setContent("Vous êtes ici.");
+					infoWindow.open(map);
+					map.setCenter(pos);
+				},
+				() => {
+					handleLocationError(true, infoWindow, map.getCenter());
+				}
+			);
+		} else {
+			handleLocationError(false, infoWindow, map.getCenter());
+		}
+	});
+}
 
+function handleLocationError(browserHasGeolocation, infoWindow, pos) {
+	infoWindow.setPosition(pos);
+	infoWindow.setContent(
+		browserHasGeolocation
+			? "Error: Le service de géolocalisation a échoué."
+			: "Error: Votre navigateur ne prend pas en charge la géolocalisation.",
+	);
+	infoWindow.open(map);
+}
 
-
+window.initMap = initMap;
