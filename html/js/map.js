@@ -21,54 +21,42 @@ import SitesCompetition from "./views/SitesCompetition.js";
 import generateSeineRiverPath from './components/River.js';
 import addGeolocationButton from './components/GeolocationButton.js';
 import generateLogicalBestSpots from './components/BestSpots.js';
-
+import generateMarkers from './components/generateMarkers.js'; // Import the new file
 
 let map;
 
 export async function initMap() {
-	const { Map } = await google.maps.importLibrary("maps");
-	const { AdvancedMarkerElement } = await google.maps.importLibrary("marker");
+    const { Map } = await google.maps.importLibrary("maps");
+    const { AdvancedMarkerElement } = await google.maps.importLibrary("marker");
 
-	// Fetch siteInfos from SitesCompetition
-	const siteInfos = await SitesCompetition();
+    // Fetch siteInfos from SitesCompetition
+    const siteInfos = await SitesCompetition();
 
-	function generateMarkers(siteInfos, map) {
-		siteInfos.forEach(site => {
-			if (site.latitude && site.longitude) {
-				new AdvancedMarkerElement({
-					map: map,
-					position: { lat: site.latitude, lng: site.longitude },
-					title: site.location
-				});
-			}
-		});
-	}
+    const zoom = 6;
+    const center = { lat: 47.700000, lng: 2.633333 }
+    const bounds = {
+        north: center.lat + 6,
+        south: center.lat - 6,
+        east: center.lng + 10,
+        west: center.lng - 10,
+    };
+    map = new Map(document.getElementById("map"), {
+        center: center,
+        zoom: zoom,
+        minZoom: zoom - 1,
+        maxZoom: zoom + 10,
+        restriction: {
+            latLngBounds: bounds,
+            strictBounds: false
+        },
+        mapId: "f1e6188476cdfda9",
+        streetViewControl: false
+    });
 
-	const zoom = 6;
-	const center = { lat: 47.700000, lng: 2.633333 }
-	const bounds = {
-		north: center.lat + 6,
-		south: center.lat - 6,
-		east: center.lng + 10,
-		west: center.lng - 10,
-	};
-	map = new Map(document.getElementById("map"), {
-		center: center,
-		zoom: zoom,
-		minZoom: zoom - 1,
-		maxZoom: zoom + 10,
-		restriction: {
-			latLngBounds: bounds,
-			strictBounds: false
-		},
-		mapId: "f1e6188476cdfda9",
-		streetViewControl: false
-	});
-
-	generateMarkers(siteInfos, map);
-	generateLogicalBestSpots(siteInfos, map);
-	generateSeineRiverPath(map);
-	addGeolocationButton(map);
+    generateMarkers(siteInfos, map, AdvancedMarkerElement); // Pass AdvancedMarkerElement as a parameter
+    generateLogicalBestSpots(siteInfos, map);
+    generateSeineRiverPath(map);
+    addGeolocationButton(map);
 }
 
 window.initMap = initMap;
