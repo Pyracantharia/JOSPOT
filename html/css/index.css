@@ -2880,3 +2880,31 @@ img{
 .custom-map-control-button:hover {
   background: rgb(235, 235, 235);
 }
+
+.event-pop-up {
+  position: fixed;
+  top: 20%;
+  left: 50%;
+  transform: translate(-50%, -20%);
+  background-color: white;
+  padding: 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  border-radius: 5px;
+  width: 300px;
+  text-align: center;
+}
+
+.event-pop-up h2 {
+  margin-top: 0;
+}
+
+#close-pop-up {
+  margin-top: 10px;
+  padding: 5px 10px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+}

@@ -18,10 +18,12 @@
 });
 
 import SitesCompetition from "./views/SitesCompetition.js";
+import showNearestEventPopUp from "./components/Pop.js";
 import generateSeineRiverPath from './components/River.js';
 import addGeolocationButton from './components/GeolocationButton.js';
 import generateLogicalBestSpots from './components/BestSpots.js';
 import generateMarkers from './components/generateMarkers.js'; // Import the new file
+
 
 let map;
 
@@ -31,6 +33,7 @@ export async function initMap() {
 
     // Fetch siteInfos from SitesCompetition
     const siteInfos = await SitesCompetition();
+
 
     const zoom = 6;
     const center = { lat: 47.700000, lng: 2.633333 }
@@ -53,10 +56,15 @@ export async function initMap() {
         streetViewControl: false
     });
 
+
+
     generateMarkers(siteInfos, map, AdvancedMarkerElement); // Pass AdvancedMarkerElement as a parameter
     generateLogicalBestSpots(siteInfos, map);
     generateSeineRiverPath(map);
     addGeolocationButton(map);
+    await showNearestEventPopUp();
 }
 
+
 window.initMap = initMap;
+
