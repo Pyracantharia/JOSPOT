@@ -18,187 +18,115 @@
 	// Add other bootstrap parameters as needed, using camel case.
 	// Use the 'v' parameter to indicate the version to load (alpha, beta, weekly, etc.)
 });
+
 import SitesCompetition from "./views/SitesCompetition.js";
 
-let map, infoWindow;
+let map;
 
 export async function initMap() {
-	const { Map } = await google.maps.importLibrary("maps");
-	const { AdvancedMarkerElement } = await google.maps.importLibrary("marker");
+    const { Map } = await google.maps.importLibrary("maps");
+    const { AdvancedMarkerElement } = await google.maps.importLibrary("marker");
 
-	const siteInfos = await SitesCompetition();
+    const siteInfos = await SitesCompetition();
 
-	function generateMarkers(siteInfos, map) {
-		siteInfos.forEach(site => {
-			if (site.latitude && site.longitude) {
-				new AdvancedMarkerElement({
-					map: map,
-					position: { lat: site.latitude, lng: site.longitude },
-					title: site.location
-				});
-			}
-		});
-	}
+    function generateMarkers(siteInfos, map) {
+        siteInfos.forEach(site => {
+            if (site.latitude && site.longitude) {
+                new AdvancedMarkerElement({
+                    map: map,
+                    position: { lat: site.latitude, lng: site.longitude },
+                    title: site.location
+                });
+            }
+        });
+    }
 
-	function generateLogicalBestSpots(siteInfos, map) {
-		const createRandomPointInRadius = (lat, lng, radius) => {
-			const getRandomOffset = (max) => (Math.random() - 0.5) * max;
+    function generateLogicalBestSpots(siteInfos, map) {
+        const createRandomPointInRadius = (lat, lng, radius) => {
+            const getRandomOffset = (max) => (Math.random() - 0.5) * max;
 
-			const latOffset = getRandomOffset(radius / 111);
-			const lngOffset = getRandomOffset(radius / (111 * Math.cos(lat * Math.PI / 180)));
+            const latOffset = getRandomOffset(radius / 111);
+            const lngOffset = getRandomOffset(radius / (111 * Math.cos(lat * Math.PI / 180)));
 
-			return { lat: lat + latOffset, lng: lng + lngOffset };
-		};
+            return { lat: lat + latOffset, lng: lng + lngOffset };
+        };
 
-		const radiusInKm = 0.5;
+        const radiusInKm = 0.5;
 
-		siteInfos.forEach(site => {
-			if (site.latitude && site.longitude) {
-				for (let i = 0; i < 3; i++) {
-					const randomPoint = createRandomPointInRadius(site.latitude, site.longitude, radiusInKm);
-					new google.maps.Marker({
-						map: map,
-						position: { lat: randomPoint.lat, lng: randomPoint.lng },
-						title: "Best Spot",
-						icon: {
-							url: '../img/Best_pin_point.svg',
-							scaledSize: new google.maps.Size(24, 24)
-						}
-					});
-				}
-			}
-		});
-	}
+        siteInfos.forEach(site => {
+            if (site.latitude && site.longitude) {
+                for (let i = 0; i < 3; i++) {
+                    const randomPoint = createRandomPointInRadius(site.latitude, site.longitude, radiusInKm);
+                    new google.maps.Marker({
+                        map: map,
+                        position: { lat: randomPoint.lat, lng: randomPoint.lng },
+                        title: "Best Spot",
+                        icon: {
+                            url: '../img/Best_pin_point.svg',
+                            scaledSize: new google.maps.Size(24, 24)
+                        }
+                    });
+                }
+            }
+        });
+    }
 
-	const zoom = 6;
-	const center = { lat: 47.700000, lng: 2.633333 }
-	const bounds = {
-		north: center.lat + 6,
-		south: center.lat - 6,
-		east: center.lng + 10,
-		west: center.lng - 10,
-	};
-	map = new Map(document.getElementById("map"), {
-		center: center,
-		zoom: zoom,
-		minZoom: zoom - 1,
-		maxZoom: zoom + 10,
-		restriction: {
-			latLngBounds: bounds,
-			strictBounds: false
-		},
-		mapId: "f1e6188476cdfda9",
-		streetViewControl: false
-	});
+    const zoom = 6;
+    const center = { lat: 47.700000, lng: 2.633333 }
+    const bounds = {
+        north: center.lat + 6,
+        south: center.lat - 6,
+        east: center.lng + 10,
+        west: center.lng - 10,
+    };
+    map = new Map(document.getElementById("map"), {
+        center: center,
+        zoom: zoom,
+        minZoom: zoom - 1,
+        maxZoom: zoom + 10,
+        restriction: {
+            latLngBounds: bounds,
+            strictBounds: false
+        },
+        mapId: "f1e6188476cdfda9",
+        streetViewControl: false
+    });
 
-	generateMarkers(siteInfos, map);
-	generateLogicalBestSpots(siteInfos, map);
+    generateMarkers(siteInfos, map);
+    generateLogicalBestSpots(siteInfos, map);
 
-	infoWindow = new google.maps.InfoWindow();
-	const locationButton = document.createElement("button");
-
-	locationButton.textContent = "Se localiser";
-	locationButton.classList.add("custom-map-control-button");
-	map.controls[google.maps.ControlPosition.TOP_CENTER].push(locationButton);
-	locationButton.addEventListener("click", () => {
-		if (navigator.geolocation) {
-			navigator.geolocation.getCurrentPosition(
-				async (position) => {
-					const pos = {
-						lat: position.coords.latitude,
-						lng: position.coords.longitude,
-					};
-
-					infoWindow.setPosition(pos);
-					infoWindow.setContent("Vous êtes ici.");
-					infoWindow.open(map);
-					map.setCenter(pos);
-
-					// Afficher la pop-up après que la position a été obtenue
-					await showNearestEventPopUp(pos);
-				},
-				() => {
-					handleLocationError(true, infoWindow, map.getCenter());
-				}
-			);
-		} else {
-			handleLocationError(false, infoWindow, map.getCenter());
-		}
-	});
-
-	// Afficher la pop-up après le chargement de la carte
-	if (navigator.geolocation) {
-		navigator.geolocation.getCurrentPosition(
-			async (position) => {
-				const pos = {
-					lat: position.coords.latitude,
-					lng: position.coords.longitude,
-				};
-
-				map.setCenter(pos);
-
-				// Afficher la pop-up après que la position a été obtenue
-				await showNearestEventPopUp(pos);
-			},
-			() => {
-				handleLocationError(true, infoWindow, map.getCenter());
-			}
-		);
-	} else {
-		handleLocationError(false, infoWindow, map.getCenter());
-	}
+    // Afficher la pop-up après le chargement de la carte
+    await showNearestEventPopUp();
 }
 
-function handleLocationError(browserHasGeolocation, infoWindow, pos) {
-	infoWindow.setPosition(pos);
-	infoWindow.setContent(
-		browserHasGeolocation
-			? "Error: Le service de géolocalisation a échoué."
-			: "Error: Votre navigateur ne prend pas en charge la géolocalisation.",
-	);
-	infoWindow.open(map);
-}
+async function showNearestEventPopUp() {
+    const nearestEvent = await getNearestEvent();
 
-async function showNearestEventPopUp(pos) {
-	const nearestEvent = await getNearestEvent();
-	const distance = calculateDistance(pos.lat, pos.lng, nearestEvent.latitude, nearestEvent.longitude);
-
-	const popUp = document.createElement("div");
-	popUp.classList.add("event-pop-up");
-	popUp.innerHTML = `
+    const popUp = document.createElement("div");
+    popUp.classList.add("event-pop-up");
+    popUp.innerHTML = `
         <h2>Événement à venir le plus proche</h2>
         <p><strong>Lieu:</strong> ${nearestEvent.location}</p>
         <p><strong>Date de début:</strong> ${new Date(nearestEvent.starting_date).toLocaleString()}</p>
-        <p><strong>Distance:</strong> ${distance.toFixed(2)} km</p>
         <button id="close-pop-up">Fermer</button>
     `;
-	document.body.appendChild(popUp);
+    document.body.appendChild(popUp);
 
-	document.getElementById("close-pop-up").addEventListener("click", () => {
-		document.body.removeChild(popUp);
-	});
-}
-
-function calculateDistance(lat1, lon1, lat2, lon2) {
-	const R = 6371; // Rayon de la Terre en km
-	const dLat = (lat2 - lat1) * Math.PI / 180;
-	const dLon = (lon2 - lon1) * Math.PI / 180;
-	const a =
-		0.5 - Math.cos(dLat) / 2 +
-		Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
-		(1 - Math.cos(dLon)) / 2;
-	return R * 2 * Math.asin(Math.sqrt(a));
+    document.getElementById("close-pop-up").addEventListener("click", () => {
+        document.body.removeChild(popUp);
+    });
 }
 
 async function getNearestEvent() {
-	const siteInfos = await SitesCompetition();
-	const currentDate = new Date();
+    const siteInfos = await SitesCompetition();
+    const currentDate = new Date();
 
-	// Filtrer les événements futurs et les trier par date
-	const futureEvents = siteInfos.filter(event => new Date(event.starting_date) >= currentDate);
-	futureEvents.sort((a, b) => new Date(a.starting_date) - new Date(b.starting_date));
+    // Filtrer les événements futurs et les trier par date
+    const futureEvents = siteInfos.filter(event => new Date(event.starting_date) >= currentDate);
+    futureEvents.sort((a, b) => new Date(a.starting_date) - new Date(b.starting_date));
 
-	return futureEvents[0]; // L'événement le plus proche
+    return futureEvents[0]; // L'événement le plus proche
 }
 
 window.initMap = initMap;
+
