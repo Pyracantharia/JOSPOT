@@ -92,7 +92,8 @@ export async function initMap() {
 			latLngBounds: bounds,
 			strictBounds: false
 		},
-		mapId: "f1e6188476cdfda9" // important to enable the use of markers
+		mapId: "f1e6188476cdfda9", // important to enable the use of markers
+		streetViewControl: false // Disable Pegman control
 	});
 
 	generateMarkers(siteInfos, map);
