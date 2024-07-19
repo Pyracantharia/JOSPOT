@@ -11,7 +11,8 @@ export default async function allEvents() {
           latitude: result.geolocation ? result.geolocation.lat : null,
           location: result.location,
           title: result.title,
-          address: result.address
+          address: result.address,
+          photo_link: result.photo_link
         };
         
       });
