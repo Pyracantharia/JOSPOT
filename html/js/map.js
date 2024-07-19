@@ -53,7 +53,8 @@ export async function initMap() {
             strictBounds: false
         },
         mapId: "f1e6188476cdfda9",
-        streetViewControl: false
+        streetViewControl: false,
+        mapTypeControl: false
     });
 
 
