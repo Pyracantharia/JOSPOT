@@ -1,23 +1,6 @@
-(g => {
-	var h, a, k, p = "The Google Maps JavaScript API", c = "google", l = "importLibrary", q = "__ib__", m = document, b = window;
-	b = b[c] || (b[c] = {});
-	var d = b.maps || (b.maps = {}), r = new Set, e = new URLSearchParams, u = () => h || (h = new Promise(async (f, n) => {
-		await (a = m.createElement("script"));
-		e.set("libraries", [...r] + "");
-		for (k in g) e.set(k.replace(/[A-Z]/g, t => "_" + t[0].toLowerCase()), g[k]);
-		e.set("callback", c + ".maps." + q);
-		a.src = `https://maps.${c}apis.com/maps/api/js?` + e;
-		d[q] = f;
-		a.onerror = () => h = n(Error(p + " could not load."));
-		a.nonce = m.querySelector("script[nonce]")?.nonce || "";
-		m.head.append(a)
-	}));
-	d[l] ? console.warn(p + " only loads once. Ignoring:", g) : d[l] = (f, ...n) => r.add(f) && u().then(() => d[l](f, ...n))
-})({
-	key: "AIzaSyCwRlYsm_3KSv8r8or-DLKZV8f3rDWdLpo",
-});
+import "./core/googleMapAPI.js";
 
-import SitesCompetition from "./views/SitesCompetition.js";
+import allEvents from "./data/SportsEvents.js";
 import showNearestEventPopUp from "./components/Pop.js";
 import generateSeineRiverPath from './components/River.js';
 import addGeolocationButton from './components/GeolocationButton.js';
@@ -32,8 +15,7 @@ export async function initMap() {
     const { AdvancedMarkerElement } = await google.maps.importLibrary("marker");
 
     // Fetch siteInfos from SitesCompetition
-    const siteInfos = await SitesCompetition();
-
+    const events = await allEvents();
 
     const zoom = 6;
     const center = { lat: 47.700000, lng: 2.633333 }
@@ -43,6 +25,7 @@ export async function initMap() {
         east: center.lng + 10,
         west: center.lng - 10,
     };
+
     map = new Map(document.getElementById("map"), {
         center: center,
         zoom: zoom,
@@ -57,15 +40,9 @@ export async function initMap() {
         mapTypeControl: false
     });
 
-
-
-    generateMarkers(siteInfos, map, AdvancedMarkerElement); // Pass AdvancedMarkerElement as a parameter
-    generateLogicalBestSpots(siteInfos, map);
+    generateMarkers(events, map, AdvancedMarkerElement); // Pass AdvancedMarkerElement as a parameter
+    generateLogicalBestSpots(events, map);
     generateSeineRiverPath(map);
     addGeolocationButton(map);
     await showNearestEventPopUp();
 }
-
-
-window.initMap = initMap;
-

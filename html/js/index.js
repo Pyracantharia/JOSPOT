@@ -7,4 +7,5 @@ const root = document.getElementById("root");
 
 BrowserRouter(root, routes);
 
-await initMap();
+window.onload = await initMap();
+
