@@ -15,87 +15,56 @@
 	d[l] ? console.warn(p + " only loads once. Ignoring:", g) : d[l] = (f, ...n) => r.add(f) && u().then(() => d[l](f, ...n))
 })({
 	key: "AIzaSyCwRlYsm_3KSv8r8or-DLKZV8f3rDWdLpo",
-	// Add other bootstrap parameters as needed, using camel case.
-	// Use the 'v' parameter to indicate the version to load (alpha, beta, weekly, etc.)
 });
 
 import SitesCompetition from "./views/SitesCompetition.js";
+import showNearestEventPopUp from "./components/Pop.js";
+import generateSeineRiverPath from './components/River.js';
+import addGeolocationButton from './components/GeolocationButton.js';
+import generateLogicalBestSpots from './components/BestSpots.js';
+import generateMarkers from './components/generateMarkers.js'; // Import the new file
+
 
 let map;
 
 export async function initMap() {
-	const { Map } = await google.maps.importLibrary("maps");
-	const { AdvancedMarkerElement } = await google.maps.importLibrary("marker");
+    const { Map } = await google.maps.importLibrary("maps");
+    const { AdvancedMarkerElement } = await google.maps.importLibrary("marker");
 
-	// Fetch siteInfos from SitesCompetition
-	const siteInfos = await SitesCompetition();
-
-	function generateMarkers(siteInfos, map) {
-		siteInfos.forEach(site => {
-			if (site.latitude && site.longitude) {
-				new AdvancedMarkerElement({
-					map: map,
-					position: { lat: site.latitude, lng: site.longitude },
-					title: site.location
-				});
-			}
-		});
-	}
+    // Fetch siteInfos from SitesCompetition
+    const siteInfos = await SitesCompetition();
 
 
-	function generateLogicalBestSpots(siteInfos, map) {
-		const createRandomPointInRadius = (lat, lng, radius) => {
-			const getRandomOffset = (max) => (Math.random() - 0.5) * max;
-	
-			// Approximation : 1 degré de latitude = ~111 km, 1 degré de longitude = ~111 km * cos(latitude)
-			const latOffset = getRandomOffset(radius / 111);
-			const lngOffset = getRandomOffset(radius / (111 * Math.cos(lat * Math.PI / 180)));
-	
-			return { lat: lat + latOffset, lng: lng + lngOffset };
-		};
-	
-		const radiusInKm = 0.5; // sert a determiner le rayon de recherche des spots
-	
-		siteInfos.forEach(site => {
-			if (site.latitude && site.longitude) {
-				for (let i = 0; i < 3; i++) { 
-					const randomPoint = createRandomPointInRadius(site.latitude, site.longitude, radiusInKm);
-					new google.maps.Marker({
-						map: map,
-						position: { lat: randomPoint.lat, lng: randomPoint.lng },
-						title: "Best Spot",
-						icon: {
-							url: '../img/Best_pin_point.svg',
-							scaledSize: new google.maps.Size(24, 24) // taille de l'icone
-						}
-					});
-				}
-			}
-		});
-	}
+    const zoom = 6;
+    const center = { lat: 47.700000, lng: 2.633333 }
+    const bounds = {
+        north: center.lat + 6,
+        south: center.lat - 6,
+        east: center.lng + 10,
+        west: center.lng - 10,
+    };
+    map = new Map(document.getElementById("map"), {
+        center: center,
+        zoom: zoom,
+        minZoom: zoom - 1,
+        maxZoom: zoom + 10,
+        restriction: {
+            latLngBounds: bounds,
+            strictBounds: false
+        },
+        mapId: "f1e6188476cdfda9",
+        streetViewControl: false
+    });
 
 
-	const zoom = 6;
-	const center = { lat: 47.700000, lng: 2.633333 }
-	const bounds = {
-		north: center.lat + 6,
-		south: center.lat - 6,
-		east: center.lng + 10,
-		west: center.lng - 10,
-	};
-	map = new Map(document.getElementById("map"), {
-		center: center,
-		zoom: zoom,
-		minZoom: zoom - 1,
-		maxZoom: zoom + 10,
-		restriction: {
-			latLngBounds: bounds,
-			strictBounds: false
-		},
-		mapId: "f1e6188476cdfda9", // important to enable the use of markers
-		streetViewControl: false // Disable Pegman control
-	});
 
-	generateMarkers(siteInfos, map);
-	generateLogicalBestSpots(siteInfos, map);
+    generateMarkers(siteInfos, map, AdvancedMarkerElement); // Pass AdvancedMarkerElement as a parameter
+    generateLogicalBestSpots(siteInfos, map);
+    generateSeineRiverPath(map);
+    addGeolocationButton(map);
+    await showNearestEventPopUp();
 }
+
+
+window.initMap = initMap;
+
