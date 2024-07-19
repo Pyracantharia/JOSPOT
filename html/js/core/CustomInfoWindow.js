@@ -15,10 +15,9 @@ export default async function getCustomInfoWindow(){
         onAdd(){
             const panes = this.getPanes();
             panes.floatPane.appendChild(this.div);
-            this.div.addEventListener("close", () => {
+            document.addEventListener("close", () => {
                 this.close();
             });
-            // this.draw();
         };
     
         draw(){
@@ -35,7 +34,6 @@ export default async function getCustomInfoWindow(){
                     const point = overlayProjection.fromLatLngToDivPixel(position);
                     this.div.style.left = point.x + 'px';
                     this.div.style.top = point.y + 'px';
-                    console.log(`info.x = ${this.div.style.left} | info.y = ${this.div.style.top}`)
                     this.div.style.transform = 'translate(-50%, -100%)';  // Center the info window above the marker
                 }
             }

@@ -25,6 +25,7 @@ export async function initMap() {
         east: center.lng + 10,
         west: center.lng - 10,
     };
+
     map = new Map(document.getElementById("map"), {
         center: center,
         zoom: zoom,
@@ -38,8 +39,6 @@ export async function initMap() {
         streetViewControl: false,
         mapTypeControl: false
     });
-
-
 
     generateMarkers(events, map, AdvancedMarkerElement); // Pass AdvancedMarkerElement as a parameter
     generateLogicalBestSpots(events, map);
