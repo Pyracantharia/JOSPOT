@@ -13,18 +13,12 @@ export default async function getCustomInfoWindow(){
         }
     
         onAdd(){
-            const div = this.div
             const panes = this.getPanes();
-            panes.floatPane.appendChild(div);
-            // const closeButton = div.querySelector('.custom-info-window-close');
-            // if (closeButton) {
-            //     closeButton.addEventListener('click', () => {
-            //         this.close();
-            //     });
-            // }
-            div.addEventListener("close", () => {
+            panes.floatPane.appendChild(this.div);
+            this.div.addEventListener("close", () => {
                 this.close();
-            })
+            });
+            // this.draw();
         };
     
         draw(){
@@ -39,9 +33,10 @@ export default async function getCustomInfoWindow(){
                 if (position) {
                     const overlayProjection = this.getProjection();
                     const point = overlayProjection.fromLatLngToDivPixel(position);
-                    const div = this.div;
-                    div.style.left = point.x + 'px';
-                    div.style.top = point.y + 'px';
+                    this.div.style.left = point.x + 'px';
+                    this.div.style.top = point.y + 'px';
+                    console.log(`info.x = ${this.div.style.left} | info.y = ${this.div.style.top}`)
+                    this.div.style.transform = 'translate(-50%, -100%)';  // Center the info window above the marker
                 }
             }
         };

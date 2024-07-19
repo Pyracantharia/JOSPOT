@@ -17,7 +17,6 @@ export async function initMap() {
     // Fetch siteInfos from SitesCompetition
     const events = await allEvents();
 
-
     const zoom = 6;
     const center = { lat: 47.700000, lng: 2.633333 }
     const bounds = {

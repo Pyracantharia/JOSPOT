@@ -2,7 +2,7 @@ export default class Info{
     
     static getDiv(title, addressText, img){
         const infoBlock = document.createElement("div");
-        infoBlock.classList.add("max-w-[300px]", "bg-white");
+        infoBlock.classList.add("max-w-[300px]", "bg-white", "absolute", "top-0", "left-0", "translate-x-[-50%]", "translate-y-[-100%]");
 
         const closeButton = document.createElement("span")
         closeButton.textContent = "X";
