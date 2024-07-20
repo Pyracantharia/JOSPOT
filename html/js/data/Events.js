@@ -1,5 +1,5 @@
 export default async function events() {
-    const apiUrl = 'https://data.paris2024.org/api/explore/v2.1/catalog/datasets/paris-2024-sites-de-competition/records?limit=15';
+    const apiUrl = 'https://data.paris2024.org/api/explore/v2.1/catalog/datasets/paris-2024-sites-de-competition/records?limit=5';
 
     const response = await fetch(apiUrl);
     const data = await response.json();
@@ -37,7 +37,6 @@ async function getAddressFromCode(lat, lng){
 
     const response = await fetch(url);
     const data = await response.json();
-    // console.log(data)
     if (data.result && data.result.length > 0) {
         return data.result[0].formatted_address;
     } else {
