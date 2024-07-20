@@ -1,4 +1,4 @@
-import allEvents from "../data/SportsEvents.js";
+import events from "../data/Events.js";
 
 export default async function showNearestEventPopUp() {
     const nearestEvent = await getNearestEvent();
@@ -7,8 +7,8 @@ export default async function showNearestEventPopUp() {
     popUp.classList.add("event-pop-up");
     popUp.innerHTML = `
         <h2>Événement à venir le plus proche</h2>
-        <p><strong>Lieu:</strong> ${nearestEvent.location}</p>
-        <p><strong>Date de début:</strong> ${new Date(nearestEvent.starting_date).toLocaleString()}</p>
+        <p><strong>Lieu:</strong> ${nearestEvent.site_name}</p>
+        <p><strong>Date de début:</strong> ${new Date(nearestEvent.start_date).toLocaleString()}</p>
         <button id="close-pop-up">Fermer</button>
     `;
     document.body.appendChild(popUp);
@@ -20,12 +20,12 @@ export default async function showNearestEventPopUp() {
 
 
 async function getNearestEvent() {
-    const events = await allEvents();
+    const allEvents = await events();
     const currentDate = new Date();
 
     // Filtrer les événements futurs et les trier par date
-    const futureEvents = events.filter(event => new Date(event.starting_date) >= currentDate);
-    futureEvents.sort((a, b) => new Date(a.starting_date) - new Date(b.starting_date));
+    const futureEvents = allEvents.filter(event => new Date(event.start_date) >= currentDate);
+    futureEvents.sort((a, b) => new Date(a.start_date) - new Date(b.start_date));
 
     return futureEvents[0]; // L'événement le plus proche
 }
