@@ -4,7 +4,7 @@ export default function addGeolocationButton(map) {
     const locationButton = document.createElement("button");
 
     locationButton.textContent = "Se localiser";
-    locationButton.classList.add("custom-map-control-button");
+    locationButton.classList.add("bg-white");
     map.controls[google.maps.ControlPosition.TOP_CENTER].push(locationButton);
     locationButton.addEventListener("click", () => {
         if (navigator.geolocation) {
