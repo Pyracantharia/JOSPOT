@@ -24,8 +24,10 @@ export default function generateSeineRiverPath(map) {
         { lat: 48.861694, lng: 2.294361 },
         { lat: 48.856083, lng: 2.288056 },
     ];
-
-    const colors = ["#0000FF", "#000000", "#FF0000", "#FFFF00", "#008000"]; // Olympic colors: blue, black, red, yellow, green
+// background: rgb(63,94,251);
+//background: radial-gradient(circle, rgba(63,94,251,1) 0%, rgba(252,70,107,1) 100%);
+// on va mettre les couleurs dans un tableau
+    const colors = [ "rgb(63,94,251)", "rgb(252,70,107)"];
 
     for (let i = 0; i < flightPlanCoordinates.length - 1; i++) {
         const flightSegment = new google.maps.Polyline({
