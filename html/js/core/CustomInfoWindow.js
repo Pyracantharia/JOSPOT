@@ -5,21 +5,29 @@ export default async function getCustomInfoWindow(){
     await google.maps.OverlayView;
 
     class CustomInfoWindow extends google.maps.OverlayView {
-        constructor(div = null){
+        constructor(content){
             super();
             this.marker = null;
             this.map = null;
-            this.div = div;
+            this.content = content;
+            this.div = null;
         }
-    
+
         onAdd(){
+            this.div = document.createElement('div');
+            this.div.style.position = 'absolute';
+            this.div.style.cursor = "pointer";
+            this.div.innerHTML = this.content;
+
+            const closeButton = this.div.querySelector('.close-icon');
+            
             const panes = this.getPanes();
             panes.floatPane.appendChild(this.div);
-            document.addEventListener("close", () => {
+            closeButton.addEventListener("click", () => {
                 this.close();
             });
-        };
-    
+        }
+
         draw(){
             if (this.marker) {
                 let position;
@@ -32,19 +40,20 @@ export default async function getCustomInfoWindow(){
                 if (position) {
                     const overlayProjection = this.getProjection();
                     const point = overlayProjection.fromLatLngToDivPixel(position);
-                    this.div.style.left = point.x + 'px';
-                    this.div.style.top = point.y + 'px';
-                    this.div.style.transform = 'translate(-50%, -100%)';  // Center the info window above the marker
+                    const popupHeight = this.div.offsetHeight;
+                    const popupWidth = this.div.offsetWidth;
+                    this.div.style.left = `${point.x - popupWidth / 2}px`;
+                    this.div.style.top = `${point.y - popupHeight}px`;
                 }
             }
-        };
-    
+        }
+
         onRemove(){
             if (this.div) {
                 this.div.parentNode.removeChild(this.div);
             }
-        };
-    
+        }
+
         open(map, marker) {
             if (marker && (marker.getPosition || marker.position)) {
                 this.map = map;
@@ -53,12 +62,12 @@ export default async function getCustomInfoWindow(){
             } else {
                 console.error("Invalid marker:", marker);
             }
-        };
-    
+        }
+
         close(){
             this.setMap(null);
-        };
+        }
     }
-    
+
     return CustomInfoWindow;
 }

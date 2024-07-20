@@ -1,63 +1,43 @@
-export default class Info{
-    
-    static getDiv(title, addressText, img){
+export default class Info {
+    static getDiv(title, addressText, img) {
+        const container = document.createElement('div');
+        container.classList.add('relative', 'bg-white', 'rounded-lg', 'shadow-lg', 'p-4', 'max-w-xs', 'z-10');
 
-        const popupBubble = document.createElement("div");
-        popupBubble.classList.add("bg-white", "rounded-md", "p-2", "flex", "absolute", "top-0", "left-0", "translate-x-[-50%]", "translate-y-[-100%]");
+        const closeButton = document.createElement('button');
+        closeButton.classList.add('close-icon', 'float-right', 'text-gray-400', 'hover:text-gray-600', 'close-btn');
 
-        const closeButtonDiv = document.createElement("div")
         const closeIcon = document.createElement("img");
         closeIcon.src = "../../img/close_icon.svg";
-        closeButtonDiv.appendChild(closeIcon);
-        closeButtonDiv.classList.add("pointer", "w-[30px]", "h-[30px]");
+        closeIcon.classList.add("w-6", "h-6");
+        closeButton.appendChild(closeIcon);
 
-        closeButtonDiv.addEventListener("click", () => {
-            document.dispatchEvent(new CustomEvent("close"));
-        })
+        const titleElement = document.createElement('h2');
+        titleElement.classList.add('text-lg', 'font-semibold', 'text-gray-800', 'mb-2');
+        titleElement.textContent = title;
 
-        const eventTitle = document.createElement("h2");
-        eventTitle.classList.add("text-[18px]", "pb-3", "font-semibold");
-        eventTitle.textContent = title;
+        const addressElement = document.createElement('p');
+        addressElement.classList.add('text-sm', 'text-gray-600', 'mb-2');
+        addressElement.textContent = addressText;
 
-        const address = document.createElement("p");
-        address.textContent = addressText;
+        const imgElement = document.createElement('img');
+        imgElement.src = img;
+        imgElement.classList.add('w-full', 'h-32', 'object-cover', 'rounded-md', 'mb-2');
 
-        const photo_link = document.createElement("img");
-        photo_link.src = img;
-        photo_link.classList.add("w-full", "h-full", "object-cover", "object-center");
+        container.appendChild(closeButton);
+        container.appendChild(titleElement);
+        container.appendChild(addressElement);
+        container.appendChild(imgElement);
 
-        const rightDiv = document.createElement("div");
-        const leftDiv = document.createElement("div");
-        rightDiv.classList.add("basis-1/2");
-        leftDiv.classList.add("h-full", "basis-1/2", "relative", "top-0", "bottom-0");
+        // Arrow element
+        const arrow = document.createElement('div');
+        arrow.classList.add('absolute', 'bottom-[-10px]', 'left-1/2', 'transform', '-translate-x-1/2', 'w-0', 'h-0', 'border-l-[10px]', 'border-l-transparent', 'border-r-[10px]', 'border-r-transparent', 'border-t-[10px]', 'border-t-white');
 
-        const rightLeftDiv = document.createElement("div");
-        const rightRightDiv = document.createElement("div");
-        rightRightDiv.appendChild(closeButtonDiv);
-        rightLeftDiv.appendChild(eventTitle);
-        rightLeftDiv.appendChild(address);
+        const wrapper = document.createElement('div');
+        wrapper.classList.add('relative');
+        wrapper.appendChild(container);
+        wrapper.appendChild(arrow);
 
-        rightLeftDiv.classList.add("p-2")
-
-        rightDiv.appendChild(rightLeftDiv);
-        rightDiv.appendChild(rightRightDiv);
-        rightDiv.classList.add("flex", "items-start")
-        leftDiv.appendChild(photo_link);
-
-        popupBubble.appendChild(leftDiv);
-        popupBubble.appendChild(rightDiv)
-
-        const anchor = document.createElement("div");
-        anchor.classList.add("absolute", "w-full", "bottom-[8px]", "left-0", "after:content-[*]", "after:absolute", "after:top-0", "after:left-0", "after:translate-x-[-50%]", "after:translate-y-[0]", "after:w-0", "after:h-0", "after:border-x-[6px]", "after:border-x-solid", "after:border-x-transparent", "after:border-t-8px", "after:border-t-solid", "after:border-t-white");
-        anchor.appendChild(popupBubble);
-
-        const popup_container = document.createElement("div");
-        popup_container.classList.add("h-0", "absolute", "w-[450px]");
-
-        popup_container.appendChild(anchor);
-
-
-        return popup_container;
+        return wrapper.outerHTML;
     }
 }
 

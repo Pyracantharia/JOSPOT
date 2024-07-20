@@ -41,7 +41,7 @@ export async function initMap() {
     });
 
     generateMarkers(allEvents, map, AdvancedMarkerElement); // Pass AdvancedMarkerElement as a parameter
-    generateLogicalBestSpots(allEvents, map);
+    // generateLogicalBestSpots(allEvents, map);
     generateSeineRiverPath(map);
     addGeolocationButton(map);
     await showNearestEventPopUp();
