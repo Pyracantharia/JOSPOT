@@ -7,9 +7,12 @@ export default function SitesCompetition() {
         return {
           longitude: result.geolocation ? result.geolocation.lon : null,
           starting_date : result.starting_date,
+          hour : result.starting_date.split("T")[1].split("+")[0].slice(0, -3),
           ending_date : result.ending_date,
           latitude: result.geolocation ? result.geolocation.lat : null,
-          location: result.location
+          location: result.location,
+          organization_name : result.organization_name,
+          title :result.title
         };
         
       });
