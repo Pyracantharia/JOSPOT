@@ -1,11 +1,11 @@
 import "./core/googleMapAPI.js";
 
-import events from "./data/Events.js";
-import showNearestEventPopUp from "./components/Pop.js";
-import generateSeineRiverPath from './components/River.js';
-import addGeolocationButton from './components/GeolocationButton.js';
-import generateLogicalBestSpots from './components/BestSpots.js';
-import generateMarkers from './components/generateMarkers.js'; // Import the new file
+// import events from "./data/Events.js";
+// import showNearestEventPopUp from "./components/Pop.js";
+// import generateSeineRiverPath from './components/River.js';
+// import addGeolocationButton from './components/GeolocationButton.js';
+// import generateLogicalBestSpots from './components/BestSpots.js';
+// import generateMarkers from './components/generateMarkers.js'; // Import the new file
 
 
 let map;
@@ -15,7 +15,7 @@ export async function initMap() {
     const { AdvancedMarkerElement } = await google.maps.importLibrary("marker");
 
     // Fetch siteInfos from SitesCompetition
-    const allEvents = await events();
+    // const allEvents = await events();
     // console.log(allEvents);
     const zoom = 6;
     const center = { lat: 47.700000, lng: 2.633333 }
@@ -40,9 +40,9 @@ export async function initMap() {
         mapTypeControl: false
     });
 
-    generateMarkers(allEvents, map, AdvancedMarkerElement); // Pass AdvancedMarkerElement as a parameter
-    // generateLogicalBestSpots(allEvents, map);
-    generateSeineRiverPath(map);
-    addGeolocationButton(map);
-    await showNearestEventPopUp();
+    // generateMarkers(allEvents, map, AdvancedMarkerElement); // Pass AdvancedMarkerElement as a parameter
+    // // generateLogicalBestSpots(allEvents, map);
+    // generateSeineRiverPath(map);
+    // addGeolocationButton(map);
+    // await showNearestEventPopUp();
 }

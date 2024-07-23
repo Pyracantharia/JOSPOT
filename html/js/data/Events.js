@@ -1,4 +1,4 @@
-export default async function events() {
+export default async function events() { // fonction "officielle" pour récupérer les épruves et leur emplacement
     const apiUrl = 'https://data.paris2024.org/api/explore/v2.1/catalog/datasets/paris-2024-sites-de-competition/records?limit=5';
 
     const response = await fetch(apiUrl);
