@@ -20,9 +20,10 @@ export default async function events() {
             latitude_string: element.latitude, // à utiliser pour convertir les coordonnées en adresse
             category_id: element.category_id,
             sports: element.sports,
-            site_name: element.nom_site,
+            site_name: element.nom_site,//endroit, lieux
             start_date: element.start_date,
             end_date: element.end_date,
+            hour: Math.floor(Math.random() * 12) + 8 + ':' + Math.floor(Math.random() * 60),
             address: address,  // Add the obtained address
         };
     }));
