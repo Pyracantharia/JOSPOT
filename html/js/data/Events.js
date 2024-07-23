@@ -1,16 +1,15 @@
 export default async function events() {
     const apiUrl = 'https://data.paris2024.org/api/explore/v2.1/catalog/datasets/paris-2024-sites-de-competition/records?limit=5';
-
-    const response = await fetch(apiUrl);
-    const data = await response.json();
-    const results = await Promise.all(data.results.map(async (element) => {
+    const response = fetch(apiUrl);
+    const data = response.json();
+    const results = Promise.all(data.results.map(async (element) => {
         const longitude = element.point_geo ? element.point_geo.lon : null;
         const latitude = element.point_geo ? element.point_geo.lat : null;
 
         // Get address from geo points
         let address = 'N/A';
         if (latitude && longitude) {
-            address = await getAddressFromCode(latitude, longitude);
+            address = getAddressFromCode(latitude, longitude);
         }
 
         return {
@@ -43,4 +42,8 @@ async function getAddressFromCode(lat, lng){
     } else {
         return 'Address not found';
     }
+}
+
+export async function testFunction() {
+    console.log('Hello from test function');
 }

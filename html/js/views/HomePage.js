@@ -1,95 +1,97 @@
 import Component from "../core/Component.js";
 // import sitesCompetition from "./SitesCompetition.js";
-import events from "../data/Events.js";
+import events, { testFunction } from "../data/Events.js";
+// import testFunction from "../data/Events.js";
 
-// const events = await sitesCompetition();
+// const events = sitesCompetition();
 const Allevents = await events();
-console.log(Allevents[0].start_date);
+// console.log(Allevents[0].start_date);
+// const a = testFunction();
 
 const elementsArray = [];
 
-Allevents.forEach(event => {
-    const obj = {
-      //event item
-      tag: "div",
-      attributes: {
-          class: "event-item p-2 border rounded-md w-[90%] mb-10".split(" "), // Add mb-10 for spacing between items
-          style: "margin-bottom: 40px;", // Ensure each item has 40px bottom margin
-      },
-      children: [
-        {
-          tag: "div",
-          attributes: {
-            class: "flex mb-2 justify-between".split(" "),
-          },
-          children: [
-            {
-              //event description
-              tag: "div",
-              attributes: {
-                class: "event-description mr-2".split(" "),
-              },
-              children: [
-                {
-                  tag: "h3",
-                  attributes: {
-                    class: "mb-3".split(" "),
-                  },
-                  // children: "Natation - 14h00",
-                  children: `${event.sports} - ${event.hour}`,
-                },
-                {
-                  tag: "p",
-                  attributes: {
-                    class: "text-xs text-gray-400 mb-2".split(" "),
-                  },
-                  children: event.address,
-                },
-                {
-                  tag: "p",
-                  attributes: {
-                    class: "text-xs text-gray-400 mb-2".split(" "),
-                  },
-                  children: event.site_name,
-                },
-              ],
-            },
-            {
-              //event-img
-              tag: "div",
-              attributes: {
-                class:
-                  "event-img w-[120px] h-full rounded-md overflow-hidden".split(
-                    " "
-                  ),
-              },
-              children: [
-                {
-                  tag: "img",
-                  attributes: {
-                    src: "img/swimming.jpg",
-                    alt: "natation",
-                    class: "object-center object-cover".split(" "),
-                  },
-                },
-              ],
-            },
-          ],
-        },
-        {
-          //event date
-          tag: "p",
-          attributes: {
-            class: "text-xs text-gray-400 text-right".split(" "),
-          },
-          children: event.starting_date,
-        },
-      ],
-    }
+// Allevents.forEach(event => {
+//     const obj = {
+//       //event item
+//       tag: "div",
+//       attributes: {
+//           class: "event-item p-2 border rounded-md w-[90%] mb-10".split(" "), // Add mb-10 for spacing between items
+//           style: "margin-bottom: 40px;", // Ensure each item has 40px bottom margin
+//       },
+//       children: [
+//         {
+//           tag: "div",
+//           attributes: {
+//             class: "flex mb-2 justify-between".split(" "),
+//           },
+//           children: [
+//             {
+//               //event description
+//               tag: "div",
+//               attributes: {
+//                 class: "event-description mr-2".split(" "),
+//               },
+//               children: [
+//                 {
+//                   tag: "h3",
+//                   attributes: {
+//                     class: "mb-3".split(" "),
+//                   },
+//                   // children: "Natation - 14h00",
+//                   children: `${event.sports} - ${event.hour}`,
+//                 },
+//                 {
+//                   tag: "p",
+//                   attributes: {
+//                     class: "text-xs text-gray-400 mb-2".split(" "),
+//                   },
+//                   children: event.address,
+//                 },
+//                 {
+//                   tag: "p",
+//                   attributes: {
+//                     class: "text-xs text-gray-400 mb-2".split(" "),
+//                   },
+//                   children: event.site_name,
+//                 },
+//               ],
+//             },
+//             {
+//               //event-img
+//               tag: "div",
+//               attributes: {
+//                 class:
+//                   "event-img w-[120px] h-full rounded-md overflow-hidden".split(
+//                     " "
+//                   ),
+//               },
+//               children: [
+//                 {
+//                   tag: "img",
+//                   attributes: {
+//                     src: "img/swimming.jpg",
+//                     alt: "natation",
+//                     class: "object-center object-cover".split(" "),
+//                   },
+//                 },
+//               ],
+//             },
+//           ],
+//         },
+//         {
+//           //event date
+//           tag: "p",
+//           attributes: {
+//             class: "text-xs text-gray-400 text-right".split(" "),
+//           },
+//           children: event.starting_date,
+//         },
+//       ],
+//     }
         
-    elementsArray.push(obj)
+//     elementsArray.push(obj)
     
-});
+// });
 
 class HomePage extends Component {
   render() {
@@ -346,7 +348,7 @@ class HomePage extends Component {
               attributes: {
                 class: "events-container h-[400px] flex flex-col items-center gap-5 overflow-y-auto sm:relative sm:h-[650px] scrollbar-thin".split(' ')
               },
-              children: elementsArray
+              // children: elementsArray
             }
           ]
         }
