@@ -1,10 +1,11 @@
-import BrowserRouter from "./components/BrowserRouter.js";
+import BrowserRouter from "./core/Router.js";
 import routes from "./routes.js";
 import { initMap } from "./map.js";
-
 
 const root = document.getElementById("root");
 
 BrowserRouter(root, routes);
 
-await initMap();
+window.onload = async () => {
+  await initMap();
+};

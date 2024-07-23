@@ -1,10 +1,14 @@
-import sitesCompetition from "./SitesCompetition.js";
+import Component from "../core/Component.js";
+// import sitesCompetition from "./SitesCompetition.js";
+import events from "../data/Events.js";
 
-const events = await sitesCompetition();
+// const events = await sitesCompetition();
+const Allevents = await events();
+console.log(Allevents[0].start_date);
 
 const elementsArray = [];
 
-events.forEach(event => {
+Allevents.forEach(event => {
     const obj = {
       //event item
       tag: "div",
@@ -32,21 +36,21 @@ events.forEach(event => {
                     class: "mb-3".split(" "),
                   },
                   // children: "Natation - 14h00",
-                  children: `${event.title} - ${event.hour}`,
+                  children: `${event.sports} - ${event.hour}`,
                 },
                 {
                   tag: "p",
                   attributes: {
                     class: "text-xs text-gray-400 mb-2".split(" "),
                   },
-                  children: event.organization_name,
+                  children: event.address,
                 },
                 {
                   tag: "p",
                   attributes: {
                     class: "text-xs text-gray-400 mb-2".split(" "),
                   },
-                  children: event.location,
+                  children: event.site_name,
                 },
               ],
             },
@@ -87,310 +91,268 @@ events.forEach(event => {
     
 });
 
-
-export default  function HomePage() {
-    // console EventList
-    // const eventList = EventList();
-    // console.log(eventList);
-
-  return {
-    //wrapper
-    tag: "div",
-    attributes: {
-      class: "wrapper w-screen h-screen relative".split(" "),
-    },
-    children: [
-      {
-        //div qui accueille la map
-        tag: "div",
-        attributes: {
-          id: "map",
-          class: "w-full h-full bg-blue-500".split(" "),
-        },
+class HomePage extends Component {
+  render() {
+    return {
+      tag: "div",
+      attributes: {
+        class: "wrapper w-screen h-screen relative".split(' ')
       },
-
-      {
-        //event section
-        tag: "section",
-        attributes: {
-          id: "events-section",
-          class:
-            "absolute bottom-0 bg-white w-full p-3 transition-all sm:top-0 sm:translate-y-0 sm:left-0 sm:w-fit sm:translate-x-[-100%] translate-y-[100%]".split(
-              " "
-            ),
+      children: [
+        {
+          // div qui accueille la map
+          tag: "div",
+          attributes: {
+            id: "map",
+            class: "w-full h-full bg-blue-500".split(' ')
+          }
         },
-        events: {
-          toggleMobile: function () {
-            this.classList.toggle("translate-y-[100%]");
+        {
+          // event section
+          tag: "section",
+          attributes: {
+            id: "events-section",
+            class: "absolute bottom-0 bg-white w-full p-3 transition-all sm:top-0 sm:translate-y-0 sm:left-0 sm:w-fit sm:translate-x-[-100%] translate-y-[100%]".split(' ')
           },
-          toggleDesktop: function () {
-            this.classList.toggle("sm:translate-x-[-100%]");
-          },
-        },
-        children: [
-          {
-            //burger menu mobile
-            tag: "div",
-            attributes: {
-              id: "burger-menu-mobile",
-              class:
-                "w-12 h-12 absolute top-[-20%] right-[30px] flex justify-center items-center bg-white rounded-full p-3 sm:hidden".split(
-                  " "
-                ),
+          events: {
+            toggleMobile: function () {
+              this.classList.toggle("translate-y-[100%]");
             },
-            events: {
-              click: function () {
-                const eventTogglerMobile = this.children[0];
-                const spanElements = eventTogglerMobile.children;
+            toggleDesktop: function () {
+              this.classList.toggle("sm:translate-x-[-100%]");
+            }
+          },
+          children: [
+            {
+              // burger menu mobile
+              tag: "div",
+              attributes: {
+                id: "burger-menu-mobile",
+                class: "w-12 h-12 absolute top-[-20%] right-[30px] flex justify-center items-center bg-white rounded-full p-3 sm:hidden".split(' ')
+              },
+              events: {
+                click: function () {
+                  const eventTogglerMobile = this.children[0];
+                  const spanElements = eventTogglerMobile.children;
 
-                for (const span of spanElements) {
-                  span.classList.toggle("touch-active");
+                  for (const span of spanElements) {
+                    span.classList.toggle("touch-active");
+                  }
+                  const parentNode = this.parentNode;
+                  const toggleMobileEvent = new CustomEvent("toggleMobile");
+                  parentNode.dispatchEvent(toggleMobileEvent);
                 }
-                const parentNode = this.parentNode;
-                const toggleMobileEvent = new CustomEvent("toggleMobile");
-                parentNode.dispatchEvent(toggleMobileEvent);
               },
+              children: [
+                {
+                  tag: "div",
+                  attributes: {
+                    id: "event-toggler-mobile",
+                    class: "relative w-[30px] h-[12px]".split(' ')
+                  },
+                  children: [
+                    {
+                      tag: "span",
+                      attributes: {
+                        class: "stripe w-full h-[2px] rounded-full bg-gray-500 transition-all absolute top-0".split(' ')
+                      }
+                    },
+                    {
+                      tag: "span",
+                      attributes: {
+                        class: "stripe w-full h-[2px] rounded-full bg-gray-500 transition-all absolute top-1/2".split(' ')
+                      }
+                    },
+                    {
+                      tag: "span",
+                      attributes: {
+                        class: "stripe w-full h-[2px] rounded-full bg-gray-500 transition-all absolute top-full".split(' ')
+                      }
+                    }
+                  ]
+                }
+              ]
             },
-            children: [
-              {
-                tag: "div",
-                attributes: {
-                  id: "event-toggler-mobile",
-                  class: "relative w-[30px] h-[12px]".split(" "),
-                },
-                children: [
-                  {
-                    tag: "span",
-                    attributes: {
-                      class:
-                        "stripe w-full h-[2px] rounded-full bg-gray-500 transition-all absolute top-0".split(
-                          " "
-                        ),
-                    },
-                  },
-                  {
-                    tag: "span",
-                    attributes: {
-                      class:
-                        "stripe w-full h-[2px] rounded-full bg-gray-500 transition-all absolute top-1/2".split(
-                          " "
-                        ),
-                    },
-                  },
-                  {
-                    tag: "span",
-                    attributes: {
-                      class:
-                        "stripe w-full h-[2px] rounded-full bg-gray-500 transition-all absolute top-full".split(
-                          " "
-                        ),
-                    },
-                  },
-                ],
+            {
+              // burger menu desktop
+              tag: "div",
+              attributes: {
+                id: "burger-menu-desktop",
+                class: "hidden w-12 h-12 absolute top-[-20%] right-[30px] sm:flex justify-center items-center bg-white rounded-full p-3 sm:top-[20px] sm:right-[-70px]".split(' ')
               },
-            ],
-          },
-          {
-            //burger menu desktop
-            tag: "div",
-            attributes: {
-              id: "burger-menu-desktop",
-              class:
-                "hidden w-12 h-12 absolute top-[-20%] right-[30px] sm:flex justify-center items-center bg-white rounded-full p-3 sm:top-[20px] sm:right-[-70px]".split(
-                  " "
-                ),
-            },
-            events: {
-              click: function () {
-                const eventTogglerDesktop = this.children[0];
-                const spanElements = eventTogglerDesktop.children;
+              events: {
+                click: function () {
+                  const eventTogglerDesktop = this.children[0];
+                  const spanElements = eventTogglerDesktop.children;
 
-                for (const span of spanElements) {
-                  span.classList.toggle("touch-active");
+                  for (const span of spanElements) {
+                    span.classList.toggle("touch-active");
+                  }
+                  const parentNode = this.parentNode;
+                  const toggleDesktopEvent = new CustomEvent("toggleDesktop");
+                  parentNode.dispatchEvent(toggleDesktopEvent);
                 }
-                const parentNode = this.parentNode;
-                const toggleDesktopEvent = new CustomEvent("toggleDesktop");
-                parentNode.dispatchEvent(toggleDesktopEvent);
               },
+              children: [
+                {
+                  tag: "div",
+                  attributes: {
+                    id: "event-toggler-desktop",
+                    class: "relative w-[30px] h-[12px]".split(' ')
+                  },
+                  children: [
+                    {
+                      tag: "span",
+                      attributes: {
+                        class: "stripe w-full h-[2px] rounded-full bg-gray-500 transition-all absolute top-0".split(' ')
+                      }
+                    },
+                    {
+                      tag: "span",
+                      attributes: {
+                        class: "stripe w-full h-[2px] rounded-full bg-gray-500 transition-all absolute top-1/2".split(' ')
+                      }
+                    },
+                    {
+                      tag: "span",
+                      attributes: {
+                        class: "stripe w-full h-[2px] rounded-full bg-gray-500 transition-all absolute top-full".split(' ')
+                      }
+                    }
+                  ]
+                }
+              ]
             },
-            children: [
-              {
-                tag: "div",
-                attributes: {
-                  id: "event-toggler-desktop",
-                  class: "relative w-[30px] h-[12px]".split(" "),
+            {
+              // H2: tout les évènements
+              tag: "h2",
+              attributes: {
+                class: "font-medium text-[18px] text-center mb-5 sm:my-6".split(' ')
+              },
+              children: "Tout les évènements"
+            },
+            {
+              // events head
+              tag: "div",
+              attributes: {
+                class: "events-head flex justify-around items-center mb-5".split(' ')
+              },
+              children: [
+                {
+                  // searchbar
+                  tag: "form",
+                  attributes: {
+                    action: "",
+                    method: "post"
+                  },
+                  children: [
+                    {
+                      tag: "div",
+                      attributes: {
+                        class: "searchbox border p-2 rounded-full flex justify-between items-center".split(' ')
+                      },
+                      children: [
+                        {
+                          tag: "input",
+                          attributes: {
+                            class: "w-32 focus:outline-none".split(' '),
+                            type: "input",
+                            name: "",
+                            placeholder: "Rechercher"
+                          }
+                        },
+                        {
+                          tag: "img",
+                          attributes: {
+                            src: "img/search.svg",
+                            alt: "Icone de recherche"
+                          }
+                        },
+                        {
+                          tag: "button",
+                          attributes: {
+                            type: "submit",
+                            hidden: true
+                          }
+                        }
+                      ]
+                    }
+                  ]
                 },
-                children: [
-                  {
-                    tag: "span",
-                    attributes: {
-                      class:
-                        "stripe w-full h-[2px] rounded-full bg-gray-500 transition-all absolute top-0".split(
-                          " "
-                        ),
-                    },
+                {
+                  tag: "form",
+                  attributes: {
+                    action: "",
+                    method: "post"
                   },
-                  {
-                    tag: "span",
-                    attributes: {
-                      class:
-                        "stripe w-full h-[2px] rounded-full bg-gray-500 transition-all absolute top-1/2".split(
-                          " "
-                        ),
-                    },
-                  },
-                  {
-                    tag: "span",
-                    attributes: {
-                      class:
-                        "stripe w-full h-[2px] rounded-full bg-gray-500 transition-all absolute top-full".split(
-                          " "
-                        ),
-                    },
-                  },
-                ],
-              },
-            ],
-          },
-          {
-            //H2: tout les évènements
-            tag: "h2",
-            attributes: {
-              class: "font-medium text-[18px] text-center mb-5 sm:my-6".split(
-                " "
-              ),
+                  children: [
+                    {
+                      tag: "select",
+                      attributes: {
+                        name: "filtres",
+                        id: "filtres",
+                        class: "border rounded-full p-[6px]".split(' ')
+                      },
+                      children: [
+                        {
+                          // option select: filtrer
+                          tag: "option",
+                          attributes: {
+                            value: "",
+                            selected: true,
+                            disabled: true
+                          },
+                          children: "Filtrer"
+                        },
+                        {
+                          // option select: Natation
+                          tag: "option",
+                          attributes: {
+                            value: "natation",
+                            selected: false,
+                            disabled: false
+                          },
+                          children: "Natation"
+                        },
+                        {
+                          // option select: Basket
+                          tag: "option",
+                          attributes: {
+                            value: "basket",
+                            selected: false,
+                            disabled: false
+                          },
+                          children: "Basket"
+                        },
+                        {
+                          // option select: Handball
+                          tag: "option",
+                          attributes: {
+                            value: "handball",
+                            selected: false,
+                            disabled: false
+                          },
+                          children: "Handball"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
             },
-            children: "Tout les évènements",
-          },
-          {
-            //events head
-            tag: "div",
-            attributes: {
-              class: "events-head flex justify-around items-center mb-5".split(
-                " "
-              ),
-            },
-            children: [
-              {
-                //searchbar
-                tag: "form",
-                attributes: {
-                  action: "",
-                  method: "post",
-                },
-                children: [
-                  {
-                    tag: "div",
-                    attributes: {
-                      class:
-                        "searchbox border p-2 rounded-full flex justify-between items-center".split(
-                          " "
-                        ),
-                    },
-                    children: [
-                      {
-                        tag: "input",
-                        attributes: {
-                          class: "w-32 focus:outline-none".split(" "),
-                          type: "input",
-                          name: "",
-                          placeholder: "Rechercher",
-                        },
-                      },
-                      {
-                        tag: "img",
-                        attributes: {
-                          src: "img/search.svg",
-                          alt: "Icone de recherche",
-                        },
-                      },
-                      {
-                        tag: "button",
-                        attributes: {
-                          type: "submit",
-                          hidden: true, // gérer ce cas aussi
-                        },
-                      },
-                    ],
-                  },
-                ],
+            {
+              // event list
+              tag: "div",
+              attributes: {
+                class: "events-container h-[400px] flex flex-col items-center gap-5 overflow-y-auto sm:relative sm:h-[650px] scrollbar-thin".split(' ')
               },
-              {
-                tag: "form",
-                attributes: {
-                  action: "",
-                  method: "post",
-                },
-                children: [
-                  {
-                    tag: "select",
-                    attributes: {
-                      name: "filtres",
-                      id: "filtres",
-                      class: "border rounded-full p-[6px]".split(" "),
-                    },
-                    children: [
-                      {
-                        //option select: filtrer
-                        tag: "option",
-                        attributes: {
-                          value: "",
-                          selected: true,
-                          disabled: true,
-                        },
-                        children: "Filtrer",
-                      },
-                      {
-                        //option select: Natation
-                        tag: "option",
-                        attributes: {
-                          value: "natation",
-                          selected: false,
-                          disabled: false,
-                        },
-                        children: "Natation",
-                      },
-                      {
-                        //option select: Basket
-                        tag: "option",
-                        attributes: {
-                          value: "basket",
-                          selected: false,
-                          disabled: false,
-                        },
-                        children: "Basket",
-                      },
-                      {
-                        //option select: Handball
-                        tag: "option",
-                        attributes: {
-                          value: "handball",
-                          selected: false,
-                          disabled: false,
-                        },
-                        children: "Handball",
-                      },
-                    ],
-                  },
-                ],
-              },
-            ],
-          },
-          {
-            // tag: "div",
-            // children: elementsArray
-            //event list
-            tag: "div",
-            attributes: {
-              class:
-                "events-container h-[400px] flex flex-col items-center gap-5 overflow-y-auto sm:relative sm:h-[650px] scrollbar-thin".split(
-                  " "
-                ),
-            },
-            children: elementsArray,
-          },
-        ],
-      },
-    ],
-  };
+              children: elementsArray
+            }
+          ]
+        }
+      ]
+    };
+  }
 }
+
+export default HomePage;

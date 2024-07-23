@@ -1,4 +1,4 @@
-export default function SitesCompetition() {
+export default async function allEvents() {
   const apiUrl = 'https://data.paris2024.org/api/explore/v2.1/catalog/datasets/games_map_events_fr/exports/json';
   return fetch(apiUrl)
     .then(response => response.json())
@@ -12,7 +12,9 @@ export default function SitesCompetition() {
           latitude: result.geolocation ? result.geolocation.lat : null,
           location: result.location,
           organization_name : result.organization_name,
-          title :result.title
+          title: result.title,
+          address: result.address,
+          photo_link: result.photo_link
         };
         
       });

@@ -25,17 +25,61 @@ export default function generateSeineRiverPath(map) {
         { lat: 48.856083, lng: 2.288056 },
     ];
 
-    const colors = ["#0000FF", "#000000", "#FF0000", "#FFFF00", "#008000"]; // Olympic colors: blue, black, red, yellow, green
+    // Fonction pour interpoler entre deux couleurs RGB
+    function interpolateColor(color1, color2, factor) {
+        const result = color1.slice();
+        for (let i = 0; i < 3; i++) {
+            result[i] = Math.round(result[i] + factor * (color2[i] - color1[i]));
+        }
+        return result;
+    }
 
+    // Convertir une couleur RGB en tableau
+    function rgbToArray(rgb) {
+        return rgb.match(/\d+/g).map(Number);
+    }
+
+    // Convertir un tableau en couleur RGB
+    function arrayToRgb(arr) {
+        return `rgb(${arr[0]}, ${arr[1]}, ${arr[2]})`;
+    }
+
+    // Définir les couleurs du gradient avec leurs positions respectives (de 0 à 1)
+    const gradientColors = [
+        { color: rgbToArray("rgb(2, 128, 199)"), position: 0 },
+        { color: rgbToArray("rgb(252, 176, 48)"), position: 0.2 },
+        { color: rgbToArray("rgb(1, 1, 1)"), position: 0.4 },
+        { color: rgbToArray("rgb(2, 166, 80)"), position: 0.6 },
+        { color: rgbToArray("rgb(238, 51, 76)"), position: 0.8 },
+        { color: rgbToArray("rgb(238, 51, 76)"), position: 1 } // ajouter la dernière couleur pour couvrir 100%
+    ];
+
+    // Fonction pour trouver les couleurs adjacentes et interpoler entre elles
+    function getInterpolatedColor(position) {
+        for (let i = 0; i < gradientColors.length - 1; i++) {
+            if (position >= gradientColors[i].position && position <= gradientColors[i + 1].position) {
+                const factor = (position - gradientColors[i].position) / (gradientColors[i + 1].position - gradientColors[i].position);
+                return interpolateColor(gradientColors[i].color, gradientColors[i + 1].color, factor);
+            }
+        }
+        return gradientColors[gradientColors.length - 1].color;
+    }
+
+    // Itérer sur les coordonnées des segments de vol
     for (let i = 0; i < flightPlanCoordinates.length - 1; i++) {
+        // Calculer la position sur le gradient
+        const position = i / (flightPlanCoordinates.length - 1);
+        const interpolatedColor = getInterpolatedColor(position);
+
         const flightSegment = new google.maps.Polyline({
             path: [flightPlanCoordinates[i], flightPlanCoordinates[i + 1]],
             geodesic: true,
-            strokeColor: colors[i % colors.length],
+            strokeColor: arrayToRgb(interpolatedColor),
             strokeOpacity: 1.0,
             strokeWeight: 10
         });
 
         flightSegment.setMap(map);
     }
+
 }

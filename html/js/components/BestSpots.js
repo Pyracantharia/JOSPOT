@@ -1,4 +1,4 @@
-export default function generateLogicalBestSpots(siteInfos, map) {
+export default function generateLogicalBestSpots(events, map) {
     const createRandomPointInRadius = (lat, lng, radius) => {
         const getRandomOffset = (max) => (Math.random() - 0.5) * max;
 
@@ -10,10 +10,10 @@ export default function generateLogicalBestSpots(siteInfos, map) {
 
     const radiusInKm = 0.5;
 
-    siteInfos.forEach(site => {
-        if (site.latitude && site.longitude) {
+    events.forEach(event => {
+        if (event.latitude && event.longitude) {
             for (let i = 0; i < 3; i++) {
-                const randomPoint = createRandomPointInRadius(site.latitude, site.longitude, radiusInKm);
+                const randomPoint = createRandomPointInRadius(event.latitude, event.longitude, radiusInKm);
                 new google.maps.Marker({
                     map: map,
                     position: { lat: randomPoint.lat, lng: randomPoint.lng },
