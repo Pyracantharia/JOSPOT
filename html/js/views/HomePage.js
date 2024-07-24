@@ -6,86 +6,86 @@ const elementsArray = [];
 
 
 Allevents.forEach(event => {
-    const obj = {
-      //event item
-      tag: "div",
-      attributes: {
-          class: "event-item p-2 border rounded-md w-[90%] mb-10".split(" "), // Add mb-10 for spacing between items
-          style: "margin-bottom: 40px;", // Ensure each item has 40px bottom margin
+  const obj = {
+    //event item
+    tag: "div",
+    attributes: {
+      class: "event-item p-2 border rounded-md w-[90%] mb-10".split(" "), // Add mb-10 for spacing between items
+      style: "margin-bottom: 40px;", // Ensure each item has 40px bottom margin
+    },
+    children: [
+      {
+        tag: "div",
+        attributes: {
+          class: "flex mb-2 justify-between".split(" "),
+        },
+        children: [
+          {
+            //event description
+            tag: "div",
+            attributes: {
+              class: "event-description mr-2".split(" "),
+            },
+            children: [
+              {
+                tag: "h3",
+                attributes: {
+                  class: "mb-3".split(" "),
+                },
+                // children: "Natation - 14h00",
+                children: `${event.sports} - ${event.hour}`,
+              },
+              {
+                tag: "p",
+                attributes: {
+                  class: "text-xs text-gray-400 mb-2".split(" "),
+                },
+                children: event.address,
+              },
+              {
+                tag: "p",
+                attributes: {
+                  class: "text-xs text-gray-400 mb-2".split(" "),
+                },
+                children: event.site_name,
+              },
+            ],
+          },
+          {
+            //event-img
+            tag: "div",
+            attributes: {
+              class:
+                "event-img w-[120px] h-full rounded-md overflow-hidden".split(
+                  " "
+                ),
+            },
+            children: [
+              {
+                tag: "img",
+                attributes: {
+                  src: "img/swimming.jpg",
+                  alt: "natation",
+                  class: "object-center object-cover".split(" "),
+                },
+              },
+            ],
+          },
+        ],
       },
-      children: [
-        {
-          tag: "div",
-          attributes: {
-            class: "flex mb-2 justify-between".split(" "),
-          },
-          children: [
-            {
-              //event description
-              tag: "div",
-              attributes: {
-                class: "event-description mr-2".split(" "),
-              },
-              children: [
-                {
-                  tag: "h3",
-                  attributes: {
-                    class: "mb-3".split(" "),
-                  },
-                  // children: "Natation - 14h00",
-                  children: `${event.sports} - ${event.hour}`,
-                },
-                {
-                  tag: "p",
-                  attributes: {
-                    class: "text-xs text-gray-400 mb-2".split(" "),
-                  },
-                  children: event.address,
-                },
-                {
-                  tag: "p",
-                  attributes: {
-                    class: "text-xs text-gray-400 mb-2".split(" "),
-                  },
-                  children: event.site_name,
-                },
-              ],
-            },
-            {
-              //event-img
-              tag: "div",
-              attributes: {
-                class:
-                  "event-img w-[120px] h-full rounded-md overflow-hidden".split(
-                    " "
-                  ),
-              },
-              children: [
-                {
-                  tag: "img",
-                  attributes: {
-                    src: "img/swimming.jpg",
-                    alt: "natation",
-                    class: "object-center object-cover".split(" "),
-                  },
-                },
-              ],
-            },
-          ],
+      {
+        //event date
+        tag: "p",
+        attributes: {
+          class: "text-xs text-gray-400 text-right".split(" "),
         },
-        {
-          //event date
-          tag: "p",
-          attributes: {
-            class: "text-xs text-gray-400 text-right".split(" "),
-          },
-          children: event.starting_date,
-        },
-      ],
-    }
-        
-    elementsArray.push(obj)
-    
+        children: event.starting_date,
+      },
+    ],
+  }
+
+  elementsArray.push(obj)
+
 });
 
 class HomePage extends Component {
@@ -344,6 +344,39 @@ class HomePage extends Component {
                 class: "events-container h-[400px] flex flex-col items-center gap-5 overflow-y-auto sm:relative sm:h-[650px] scrollbar-thin".split(' ')
               },
               children: elementsArray
+            }
+          ]
+        },
+        {
+          // detail section
+          tag: "section",
+          attributes: {
+            id: "detail-section",
+            class: "hidden absolute top-0 right-0 bg-white w-[300px] p-3 h-full transition-all".split(' ')
+          },
+          children: [
+            {
+              tag: "h2",
+              attributes: {
+                class: "font-medium text-[18px] text-center mb-5 sm:my-6".split(' ')
+              },
+              children: "Détails de l'évènement"
+            },
+            {
+              // detail content
+              tag: "div",
+              attributes: {
+                class: "detail-content".split(' ')
+              },
+              children: [
+                {
+                  tag: "p",
+                  attributes: {
+                    class: "text-xs text-gray-400".split(' ')
+                  },
+                  children: "Contenu des détails ici..."
+                }
+              ]
             }
           ]
         }

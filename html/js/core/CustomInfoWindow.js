@@ -1,11 +1,11 @@
 import "./googleMapAPI.js";
-import  generateSingleLogicalBestSpots from "../components/BestSpots.js";
+import generateSingleLogicalBestSpots from "../components/BestSpots.js";
 
-export default async function getCustomInfoWindow(){
+export default async function getCustomInfoWindow() {
     await google.maps.OverlayView;
 
     class CustomInfoWindow extends google.maps.OverlayView {
-        constructor(content){
+        constructor(content) {
             super();
             this.marker = null;
             this.map = null;
@@ -13,14 +13,14 @@ export default async function getCustomInfoWindow(){
             this.div = null;
         }
 
-        onAdd(){
+        onAdd() {
             this.div = document.createElement('div');
             this.div.style.position = 'absolute';
             this.div.style.cursor = "pointer";
             this.div.innerHTML = this.content;
 
             const closeButton = this.div.querySelector('.close-icon');
-            
+
             const panes = this.getPanes();
             panes.floatPane.appendChild(this.div);
             closeButton.addEventListener("click", () => {
@@ -28,23 +28,28 @@ export default async function getCustomInfoWindow(){
             });
 
             const LogButton = this.div.querySelector('#log-button');
-            
+
             // supprimer les bestpot generer precedement
 
 
 
             LogButton.addEventListener("click", () => {
-                const lat = this.marker.position.Fg 
+                const lat = this.marker.position.Fg
                 const lng = this.marker.position.Gg
                 console.log("lat: ", lat, "lng: ", lng);
-                generateSingleLogicalBestSpots(this.map, lng , lat);
-              
-                // generer un sidebar
-                // si on clique la sidebar s'affiche
+                generateSingleLogicalBestSpots(this.map, lng, lat);
+
+                // Modifier la classe de la section de détail
+                const detailSection = document.getElementById("detail-section");
+                if (detailSection) {
+                    detailSection.classList.remove("hidden");
+                    detailSection.classList.add("block");
+                }
+
             });
         }
 
-        draw(){
+        draw() {
             if (this.marker) {
                 let position;
                 if (this.marker.getPosition) {
@@ -64,7 +69,7 @@ export default async function getCustomInfoWindow(){
             }
         }
 
-        onRemove(){
+        onRemove() {
             if (this.div) {
                 this.div.parentNode.removeChild(this.div);
             }
@@ -80,7 +85,7 @@ export default async function getCustomInfoWindow(){
             }
         }
 
-        close(){
+        close() {
             this.setMap(null);
         }
     }
