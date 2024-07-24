@@ -1,10 +1,10 @@
 import "./core/googleMapAPI.js";
 
 import events from "./data/Events.js";
-import showNearestEventPopUp from "./components/Pop.js";
+// import showNearestEventPopUp from "./components/Pop.js"; // ! crée une bande blanche qui décale la map vers le haut !
 import generateSeineRiverPath from './components/River.js';
 import addGeolocationButton from './components/GeolocationButton.js';
-import generateLogicalBestSpots from './components/BestSpots.js';
+// import generateLogicalBestSpots from './components/BestSpots.js';
 import generateMarkers from './components/generateMarkers.js'; // Import the new file
 
 
@@ -44,5 +44,5 @@ export async function initMap() {
     // generateLogicalBestSpots(allEvents, map);
     generateSeineRiverPath(map);
     addGeolocationButton(map);
-    await showNearestEventPopUp();
+    // await showNearestEventPopUp();
 }

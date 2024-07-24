@@ -50,14 +50,14 @@ class Component {
     return safeStringify(this.oldProps) !== safeStringify(newProps);
   }
 
-  display(newProps) {
-    if (this.shouldUpdate(newProps)) {
+  display(newProps = null) {
+    if (newProps !== null && this.shouldUpdate(newProps)) {
       this.oldProps = newProps;
       this.props = newProps;
       const newStructure = this.render();
-      const newElement = generateStructure(newStructure);
-      this.element.replaceWith(newElement);
-      this.element = newElement;
+      return newStructure;
+    } else {
+      return this.render();
     }
   }
 
