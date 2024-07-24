@@ -23,10 +23,15 @@ export default class Info {
         imgElement.src = img;
         imgElement.classList.add('w-full', 'h-32', 'object-cover', 'rounded-md', 'mb-2');
 
+        const LogButton = document.createElement('button');
+        LogButton.id = "log-button";
+        LogButton.textContent = "Log Visit";
+
         container.appendChild(closeButton);
         container.appendChild(titleElement);
         container.appendChild(addressElement);
         container.appendChild(imgElement);
+        container.appendChild(LogButton);
 
         // Arrow element
         const arrow = document.createElement('div');
@@ -42,3 +47,8 @@ export default class Info {
 }
 
 // AIzaSyCwRlYsm_3KSv8r8or-DLKZV8f3rDWdLpo
+
+//ajotu dun bouton helloworld dans la console
+
+
+

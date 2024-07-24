@@ -1,5 +1,5 @@
 import "./googleMapAPI.js";
-
+import  generateSingleLogicalBestSpots from "../components/BestSpots.js";
 
 export default async function getCustomInfoWindow(){
     await google.maps.OverlayView;
@@ -25,6 +25,16 @@ export default async function getCustomInfoWindow(){
             panes.floatPane.appendChild(this.div);
             closeButton.addEventListener("click", () => {
                 this.close();
+            });
+
+            const LogButton = this.div.querySelector('#log-button');
+            console.log("avant le click");
+            LogButton.addEventListener("click", () => {
+                const lat = this.marker.position.Fg 
+                const lng = this.marker.position.Gg
+                console.log("lat: ", lat, "lng: ", lng);
+                generateSingleLogicalBestSpots(this.map, lng , lat);
+              
             });
         }
 
