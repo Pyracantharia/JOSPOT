@@ -28,13 +28,19 @@ export default async function getCustomInfoWindow(){
             });
 
             const LogButton = this.div.querySelector('#log-button');
-            console.log("avant le click");
+            
+            // supprimer les bestpot generer precedement
+
+
+
             LogButton.addEventListener("click", () => {
                 const lat = this.marker.position.Fg 
                 const lng = this.marker.position.Gg
                 console.log("lat: ", lat, "lng: ", lng);
                 generateSingleLogicalBestSpots(this.map, lng , lat);
               
+                // generer un sidebar
+                // si on clique la sidebar s'affiche
             });
         }
 
