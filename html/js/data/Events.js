@@ -1,8 +1,9 @@
-export default async function events() {
-    const apiUrl = 'https://data.paris2024.org/api/explore/v2.1/catalog/datasets/paris-2024-sites-de-competition/records?limit=5';
+export default async function events(sport = "") {
+    const apiUrl = 'https://data.paris2024.org/api/explore/v2.1/catalog/datasets/paris-2024-sites-de-competition/records?limit=60';
 
     const response = await fetch(apiUrl);
     const data = await response.json();
+
     const results = await Promise.all(data.results.map(async (element) => {
         const longitude = element.point_geo ? element.point_geo.lon : null;
         const latitude = element.point_geo ? element.point_geo.lat : null;
@@ -28,8 +29,13 @@ export default async function events() {
         };
     }));
 
-    return results;
-
+    // Filter results based on the sport parameter if it is set
+    const filteredResults = sport
+        ? results.filter(event => event.sports.toLowerCase().includes(sport.toLowerCase()))
+        : results;
+    
+    console.log(filteredResults);
+    return filteredResults;
 }
 
 async function getAddressFromCode(lat, lng){

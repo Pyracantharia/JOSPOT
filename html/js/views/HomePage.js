@@ -1,8 +1,7 @@
 import Component from "../core/Component.js";
 import events from "../data/Events.js";
-const Allevents = await events();
+const Allevents = await events('BasketBall');
 const elementsArray = [];
-
 
 
 Allevents.forEach(event => {
@@ -341,7 +340,7 @@ class HomePage extends Component {
               // event list
               tag: "div",
               attributes: {
-                class: "events-container h-[400px] flex flex-col items-center gap-5 overflow-y-auto sm:relative sm:h-[650px] scrollbar-thin".split(' ')
+                class: "events-container h-[800px] flex flex-col items-center gap-5 overflow-y-auto sm:relative sm:h-[650px] scrollbar-thin".split(' ')
               },
               children: elementsArray
             }
