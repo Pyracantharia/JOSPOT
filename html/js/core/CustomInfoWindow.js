@@ -40,12 +40,7 @@ export default async function getCustomInfoWindow() {
                 generateSingleLogicalBestSpots(this.map, lng, lat);
 
                 const events = await getEventsForSite(siteName);
-                console.log("Events for site:", events);
-                
-                
-                
-
-                
+                console.log("Events for site:",siteName, events);
 
                 const detailSection = document.getElementById("detail-section");
                 if (detailSection) {
