@@ -22,7 +22,7 @@ export default class SidebarComponent extends Component{
               address: event.address,
               site_name: event.site_name,
               starting_date: event.starting_date
-              }).render();
+              });
                 
             elementsArray.push(obj)
             
