@@ -3,7 +3,7 @@ import Info from "../core/Info.js";
 
 async function attachInfo(marker, event){
     const CustomInfoWindow = await getCustomInfoWindow();
-    const div = Info.getDiv(event.sports, event.address, "");
+    const div = Info.getDiv(event.sports, event.address, "img/basket.jpg");
     const customInfoWindow = new CustomInfoWindow(div);
 
     marker.addListener("click", () => {
