@@ -25,7 +25,7 @@ export default class Info {
 
         const LogButton = document.createElement('button');
         LogButton.id = "log-button";
-        LogButton.textContent = "Log Visit";
+        LogButton.textContent = "Voir les détails";
 
         container.appendChild(closeButton);
         container.appendChild(titleElement);

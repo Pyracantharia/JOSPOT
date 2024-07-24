@@ -1,36 +1,36 @@
-import Component from "../core/Component.js";
+import Component from "../../core/Component.js";
 
-export default class BurgerMenuDesktopComponent extends Component{
+export default class BurgerMenuMobileComponent extends Component{
     constructor(props){
         super(props);
     }
 
     render(){
         return {
-            // burger menu desktop
+            // burger menu mobile
             tag: "div",
             attributes: {
-              id: "burger-menu-desktop",
-              class: "hidden w-12 h-12 absolute top-[-20%] right-[30px] sm:flex justify-center items-center bg-white rounded-full p-3 sm:top-[20px] sm:right-[-70px]".split(' ')
+              id: "burger-menu-mobile",
+              class: "w-12 h-12 absolute top-[-20%] right-[30px] flex justify-center items-center bg-white rounded-full p-3 sm:hidden".split(' ')
             },
             events: {
               click: function () {
-                const eventTogglerDesktop = this.children[0];
-                const spanElements = eventTogglerDesktop.children;
+                const eventTogglerMobile = this.children[0];
+                const spanElements = eventTogglerMobile.children;
 
                 for (const span of spanElements) {
                   span.classList.toggle("touch-active");
                 }
                 const parentNode = this.parentNode;
-                const toggleDesktopEvent = new CustomEvent("toggleDesktop");
-                parentNode.dispatchEvent(toggleDesktopEvent);
+                const toggleMobileEvent = new CustomEvent("toggleMobile");
+                parentNode.dispatchEvent(toggleMobileEvent);
               }
             },
             children: [
               {
                 tag: "div",
                 attributes: {
-                  id: "event-toggler-desktop",
+                  id: "event-toggler-mobile",
                   class: "relative w-[30px] h-[12px]".split(' ')
                 },
                 children: [
