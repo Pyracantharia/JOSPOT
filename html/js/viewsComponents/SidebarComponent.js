@@ -44,8 +44,8 @@ export default class SidebarComponent extends Component{
               }
             },
             children: [
-              new BurgerMenuMobileComponent().render(),
-              new BurgerMenuDesktopComponent().render(),
+              new BurgerMenuMobileComponent(),
+              new BurgerMenuDesktopComponent(),
               {
                 // H2: tout les évènements
                 tag: "h2",
@@ -61,8 +61,8 @@ export default class SidebarComponent extends Component{
                   class: "events-head flex justify-around items-center mb-5".split(' ')
                 },
                 children: [
-                  new SearchbarComponent().render(),
-                  new FilterComponent().render()
+                  new SearchbarComponent(),
+                  new FilterComponent()
                 ]
               },
               {

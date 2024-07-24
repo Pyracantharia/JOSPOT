@@ -54,11 +54,8 @@ class Component {
     if (newProps !== null && this.shouldUpdate(newProps)) {
       this.oldProps = newProps;
       this.props = newProps;
-      const newStructure = this.render();
-      return newStructure;
-    } else {
-      return this.render();
     }
+      return this.render();
   }
 
   componentDidMount() {}
