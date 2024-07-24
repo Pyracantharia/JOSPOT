@@ -1,3 +1,5 @@
+import Component from "./Component.js";
+
 export default function generateStructure(structure) {
 	const elem = document.createElement(structure.tag);
 	if (structure.attributes) {
@@ -28,6 +30,8 @@ export default function generateStructure(structure) {
 			let subChild;
 			if (typeof child === "string") {
 				subChild = document.createTextNode(child);
+			} else if(child instanceof Component){
+				subChild = generateStructure(child.display());
 			} else {
 				subChild = generateStructure(child);
 			}
