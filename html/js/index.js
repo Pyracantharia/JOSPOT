@@ -6,4 +6,10 @@ const root = document.getElementById("root");
 
 BrowserRouter(root, routes);
 
-await initMap();
+// await initMap();
+
+
+if (window.location.pathname === "/") {
+  initMap();
+}
+
