@@ -3,7 +3,7 @@ import Info from "../core/Info.js";
 
 async function attachInfo(marker, event){
     const CustomInfoWindow = await getCustomInfoWindow();
-    const div = Info.getDiv(event.sports, event.address, "");
+    const div = Info.getDiv(event.sports, event.address, "img/basket.jpg");
     const customInfoWindow = new CustomInfoWindow(div);
 
     marker.addListener("click", () => {
@@ -18,7 +18,8 @@ export default function generateMarkers(events, map, AdvancedMarkerElement) {
             const marker = new AdvancedMarkerElement({
                 map: map,
                 position: { lat: event.latitude, lng: event.longitude },
-                title: event.sports
+                title: JSON.stringify({ sports: event.sports, site_name: event.site_name }),
+
             });
 
             attachInfo(marker, event)

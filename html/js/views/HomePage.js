@@ -1,7 +1,7 @@
 import Component from "../core/Component.js";
-import DetailSidebarComponent from "../viewsComponents/DetailSidebarComponent.js";
+import DetailSidebarComponent from "../viewsComponents/DetailSidebar/DetailSidebarComponent.js";
 import MapComponent from "../viewsComponents/MapComponent.js";
-import SidebarComponent from "../viewsComponents/SidebarComponent.js";
+import SidebarComponent from "../viewsComponents/Sidebar/SidebarComponent.js";
 
 class HomePage extends Component {
   render() {
