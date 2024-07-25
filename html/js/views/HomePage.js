@@ -1,9 +1,10 @@
 import Component from "../core/Component.js";
 import DetailSidebarComponent from "../viewsComponents/DetailSidebar/DetailSidebarComponent.js";
-import MapComponent from "../viewsComponents/MapComponent.js";
+import MapComponent from "../viewsComponents/Map/MapComponent.js";
 import SidebarComponent from "../viewsComponents/Sidebar/SidebarComponent.js";
 
 class HomePage extends Component {
+  //trouver un moyen de passer les props entre les différents composants ici
   render() {
     return {
       tag: "div",

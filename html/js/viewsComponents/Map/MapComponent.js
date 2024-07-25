@@ -1,12 +1,12 @@
-import Component from "../core/Component.js";
-import "../core/googleMapAPI.js";
+import Component from "../../core/Component.js";
+import "../../core/googleMapAPI.js";
 
-import events from "../data/Events.js";
+import events from "../../data/Events.js";
 // import showNearestEventPopUp from "./components/Pop.js"; // ! crée une bande blanche qui décale la map vers le haut !
-import generateSeineRiverPath from '../components/River.js';
-import addGeolocationButton from '../components/GeolocationButton.js';
+import generateSeineRiverPath from '../../components/River.js';
+import addGeolocationButton from '../../components/GeolocationButton.js';
 // import generateLogicalBestSpots from './components/BestSpots.js';
-import generateMarkers from '../components/generateMarkers.js'; // Import the new file
+import generateMarkers from '../../components/generateMarkers.js'; // Import the new file
 
 export default class MapComponent extends Component{
     constructor(props){
