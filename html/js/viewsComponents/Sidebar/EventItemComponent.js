@@ -43,6 +43,7 @@ export default class EventItemComponent extends Component{
         "cécifoot": "football",
         "natation": "swimming",
         "tir": "shooting",
+        
         // Ajouter plus de traductions si nécessaire
       };
   
