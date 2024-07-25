@@ -18,7 +18,8 @@ export default function generateMarkers(events, map, AdvancedMarkerElement) {
             const marker = new AdvancedMarkerElement({
                 map: map,
                 position: { lat: event.latitude, lng: event.longitude },
-                title: event.sports
+                title: JSON.stringify({ sports: event.sports, site_name: event.site_name }),
+
             });
 
             attachInfo(marker, event)

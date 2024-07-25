@@ -20,7 +20,7 @@ export default class DetailSidebarComponent extends Component{
                 attributes: {
                   class: "font-medium text-[18px] text-center mb-5 sm:my-6".split(' ')
                 },
-                children: "Détails de l'évènement"
+                children: "Les Evènements à venir"
               },
               {
                 // detail content

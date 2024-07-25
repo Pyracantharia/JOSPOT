@@ -1,5 +1,6 @@
 import "./googleMapAPI.js";
 import generateSingleLogicalBestSpots from "../components/BestSpots.js";
+import getEventsForSite from "./eventMatcher.js";
 
 export default async function getCustomInfoWindow() {
     await google.maps.OverlayView;
@@ -27,25 +28,25 @@ export default async function getCustomInfoWindow() {
                 this.close();
             });
 
-            const LogButton = this.div.querySelector('#log-button');
+            const logButton = this.div.querySelector('#log-button');
 
-            // supprimer les bestpot generer precedement
+            const titleObject = JSON.parse(this.marker.title);
+            const siteName = titleObject.site_name;
 
-
-
-            LogButton.addEventListener("click", () => {
-                const lat = this.marker.position.Fg
-                const lng = this.marker.position.Gg
+            logButton.addEventListener("click", async () => {
+                const lat = this.marker.position.Fg;
+                const lng = this.marker.position.Gg;
                 console.log("lat: ", lat, "lng: ", lng);
                 generateSingleLogicalBestSpots(this.map, lng, lat);
 
-                // Modifier la classe de la section de détail
+                const events = await getEventsForSite(siteName);
+                console.log("Events for site:",siteName, events);
+
                 const detailSection = document.getElementById("detail-section");
                 if (detailSection) {
                     detailSection.classList.remove("hidden");
                     detailSection.classList.add("block");
                 }
-
             });
         }
 
