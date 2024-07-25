@@ -32,6 +32,17 @@ export default class EventItemComponent extends Component{
         "athlétisme": "athletics",
         "escrime": "fencing",
         "volley-ball": "beachvolley", 
+        "escalade": "sportclimbing", 
+        "skateboard": "skateboarding",
+        "parc" : "athletics",
+        "aviron": "rowing",
+        "cyclisme": "roadcycling",
+        "boxe": "boxing",
+        "boccia": "athletics",
+        "voile": "sailing",
+        "cécifoot": "football",
+        "natation": "swimming",
+        "tir": "shooting",
         // Ajouter plus de traductions si nécessaire
       };
   
