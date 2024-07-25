@@ -16,7 +16,45 @@ export default class EventItemComponent extends Component{
         super(props);
     }
 
+    translateSportName(sport) {
+      // Convertir le nom du sport en minuscules et le diviser en mots
+      let words = sport.toLowerCase().split(" ");
+  
+      // Filtrer "para" et joindre le reste pour former la clé
+      const key = words.filter(word => word !== "para").join(" ");
+  
+      // Retourner le premier mot de la clé
+      return key.split(" ")[0];
+    }
+  
+    FrenchToEnglish(sport) {
+      const sports = {
+        "athlétisme": "athletics",
+        "escrime": "fencing",
+        "volley-ball": "beachvolley", 
+        "escalade": "sportclimbing", 
+        "skateboard": "skateboarding",
+        "parc" : "athletics",
+        "aviron": "rowing",
+        "cyclisme": "roadcycling",
+        "boxe": "boxing",
+        "boccia": "athletics",
+        "voile": "sailing",
+        "cécifoot": "football",
+        "natation": "swimming",
+        "tir": "shooting",
+        
+        // Ajouter plus de traductions si nécessaire
+      };
+  
+      // Retourner le nom du sport traduit ou l'original s'il n'est pas trouvé
+      return sports[sport] || sport;
+    }
+  
+
     render(){
+      const sportName = this.translateSportName(this.props.sports);
+      const translatedSport = this.FrenchToEnglish(sportName);
         return {
             //event item
             tag: "div",
@@ -75,8 +113,8 @@ export default class EventItemComponent extends Component{
                       {
                         tag: "img",
                         attributes: {
-                          src: "img/swimming.jpg",
-                          alt: "natation",
+                          src: `https://tickets.paris2024.org/obj/media/FR-Paris2024/teaser/event/222x222/picto${translatedSport}.png`,
+                          alt: this.props.sports,
                           class: "object-center object-cover".split(" "),
                         },
                       },
