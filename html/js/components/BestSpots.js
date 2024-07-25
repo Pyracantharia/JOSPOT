@@ -39,10 +39,11 @@ export default function generateSingleLogicalBestSpots(map, lng, lat) {
     };
 
     const radiusInKm = 0.5;
-
+    let markers = [];
+    // on génère 3 points aléatoires autour du point d'origine
     for (let i = 0; i < 3; i++) {
         const randomPoint = createRandomPointInRadius(lat, lng, radiusInKm);
-        new google.maps.Marker({
+        const marker = new google.maps.Marker({
             map: map,
             position: { lat: randomPoint.lat, lng: randomPoint.lng },
             title: "Best Spot",
@@ -51,7 +52,14 @@ export default function generateSingleLogicalBestSpots(map, lng, lat) {
                 scaledSize: new google.maps.Size(24, 24)
             }
         });
+        markers.push({
+            lat: randomPoint.lat,
+            lng: randomPoint.lng,
+            marker: marker
+        });
     }
+    
+    // on stocke les nouveaux markers dans la session storage
+    sessionStorage.setItem('singleLogicalBestSpotsMarkers', JSON.stringify(markers.map(m => ({ lat: m.lat, lng: m.lng }))));
+    window.singleLogicalBestSpotsMarkers = markers.map(m => m.marker);
 }
-
-

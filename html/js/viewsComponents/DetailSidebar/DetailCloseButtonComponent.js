@@ -1,20 +1,34 @@
 import Component from "../../core/Component.js";
 
-export default class DetailCloseButtonComponent extends Component{
-    constructor(props){
+export default class DetailCloseButtonComponent extends Component {
+    constructor(props) {
         super(props);
+        this.removeSingleLogicalBestSpots = this.removeSingleLogicalBestSpots.bind(this);
     }
 
-    render(){
+    removeSingleLogicalBestSpots() {
+        if (window.singleLogicalBestSpotsMarkers) {
+            window.singleLogicalBestSpotsMarkers.forEach(marker => marker.setMap(null));
+            window.singleLogicalBestSpotsMarkers = [];
+            sessionStorage.removeItem('singleLogicalBestSpotsMarkers');
+        }
+        console.log("les best markers ont été supprimés");
+    }
+
+    render() {
         return {
             tag: "div",
             attributes: {
                 class: "absolute top-0 left-0".split(" "),
             },
             events: {
-                click: function(){
-                    const parentElement = this.parentElement;
-                    parentElement.classList.toggle("hidden");
+                click: (event) => {
+                    const parentElement = event.currentTarget.parentElement;
+                    if (parentElement) {
+                        parentElement.classList.toggle("hidden");
+                    }
+                    // Remove the markers from the map
+                    this.removeSingleLogicalBestSpots();
                 }
             },
             children: [
@@ -30,10 +44,9 @@ export default class DetailCloseButtonComponent extends Component{
                                 src: "img/close_icon.svg"
                             }
                         }
-                        
                     ]
                 }
             ]
-        }
+        };
     }
 }
