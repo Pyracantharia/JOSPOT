@@ -5,11 +5,16 @@ export default class CustomInfoWindowComponent extends Component{
         super(props);
     }
 
+    handleClick(){
+        this.props.onClick(this.props.event)
+        document.querySelector("#detail-section").classList.toggle("hidden");
+    }
+
     render(){
         return {
             tag: "div",
             attributes: {
-                class: "info-div".split(" ")
+                class: "info-div w-[300px]".split(" ")
             },
             children: [
                 {
@@ -23,7 +28,7 @@ export default class CustomInfoWindowComponent extends Component{
                             attributes: {
                                 class: "event-title text-lg".split(" "),
                             },
-                            children: `${this.props.title}`
+                            children: `${this.props.sports}`
                         },
                         {
                             tag: "p",
@@ -37,7 +42,7 @@ export default class CustomInfoWindowComponent extends Component{
                 {
                     tag: "div",
                     attributes: {
-                        class: "img-container w-full h-9 rounded-md overflow-hidden".split(" "),
+                        class: "img-container w-full rounded-md overflow-hidden".split(" "),
                     },
                     children: [
                         {
@@ -47,9 +52,29 @@ export default class CustomInfoWindowComponent extends Component{
                             }
                         }
                     ]
+                },
+                {
+                    tag: "div",
+                    attributes: {
+                        class: "flex justify-center".split(" ")
+                    },
+                    children: [
+                        {
+                            tag: "button",
+                            attributes: {
+                                class: "bg-blue-500 text-white p-3 rounded-md mt-3".split(" ")
+                            },
+                            events: {
+                                // click: function (){
+                                //     const detail_section = document.getElementById("detail-section");
+                                //     detail_section.classList.toggle("hidden");
+                                // }
+                                click: this.handleClick.bind(this)
+                            },
+                            children: "Voir les détails de l'épreuve"
+                        }
+                    ]
                 }
-                
-                
             ]
         }
     }

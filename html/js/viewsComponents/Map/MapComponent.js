@@ -10,7 +10,7 @@ import generateMarkers from '../../components/generateMarkers.js'; // Import the
 
 export default class MapComponent extends Component{
     constructor(props){
-      super(props)
+      super(props);
     }
 
     componentDidMount(){
@@ -47,8 +47,9 @@ export default class MapComponent extends Component{
           streetViewControl: false,
           mapTypeControl: false
       });
-  
-      generateMarkers(allEvents, map, AdvancedMarkerElement); // Pass AdvancedMarkerElement as a parameter
+      
+      // this.infoWindow = new google.maps.InfoWindow();
+      generateMarkers(allEvents, map, AdvancedMarkerElement, this.props.updateSelectedEvent); // Pass AdvancedMarkerElement as a parameter
       // generateLogicalBestSpots(allEvents, map);
       generateSeineRiverPath(map);
       addGeolocationButton(map);

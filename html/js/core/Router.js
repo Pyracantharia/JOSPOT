@@ -16,7 +16,7 @@ export default function BrowserRouter(rootElement, routes) {
     if (newComponent && typeof newComponent.render === 'function') {
       ReactDOM.render(newComponent, rootElement);
       if (typeof newComponent.componentDidMount === 'function') {
-        requestAnimationFrame(() => newComponent.componentDidMount());
+        window.requestAnimationFrame(() => newComponent.componentDidMount());
       }
     } else {
       console.error("managePath did not return a valid component with render method.");
