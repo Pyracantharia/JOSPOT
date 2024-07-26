@@ -1,2 +1,4 @@
 html/node_modules
 html/css/index.css
+server/key/
+server/cert/
