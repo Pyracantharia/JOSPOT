@@ -5,40 +5,54 @@ export default class DetailSidebarComponent extends Component{
         super(props);
     }
 
-    render(){
-        return {
-            // detail section
-            tag: "section",
-            attributes: {
-              id: "detail-section",
-              class: "hidden absolute top-0 right-0 bg-white w-[300px] p-3 h-full transition-all".split(' ')
-            },
-            children: [
-              new DetailCloseButtonComponent(),
-              {
-                tag: "h2",
-                attributes: {
-                  class: "font-medium text-[18px] text-center mb-5 sm:my-6".split(' ')
-                },
-                children: "Les Evènements à venir"
+  render(){
+
+    const { selectedEvent } = this.props;
+    if (!selectedEvent) {
+      return {
+        tag: "div",
+        attributes: {
+          class: "detail-section hidden".split(' ')
+        },
+        children: []
+      };
+    } 
+    // console.log("can re-render now");
+    // console.log(selectedEvent);
+    return {
+      // detail section
+      tag: "section",
+      attributes: {
+        id: "detail-section",
+        class: "hidden absolute top-0 right-0 bg-white w-[300px] p-3 h-full transition-all".split(' ')
+      },
+      children: [
+        new DetailCloseButtonComponent(),
+        {
+          tag: "h2",
+          attributes: {
+            class: "font-medium text-[18px] text-center mb-5 sm:my-6".split(' ')
+          },
+          children: "Les Evènements à venir"
+        },
+        {
+        // detail content
+          tag: "div",
+          attributes: {
+            class: "detail-content".split(' ')
+          },
+          children: [
+            {
+              tag: "p",
+              attributes: {
+                class: "text-xs text-gray-400".split(' ')
               },
-              {
-                // detail content
-                tag: "div",
-                attributes: {
-                  class: "detail-content".split(' ')
-                },
-                children: [
-                  {
-                    tag: "p",
-                    attributes: {
-                      class: "text-xs text-gray-400".split(' ')
-                    },
-                    children: "Contenu des détails ici..."
-                  }
-                ]
-              }
-            ]
+              children: selectedEvent.sports
+              // children: ""
+            }
+          ]
         }
+      ]
     }
+  }
 }

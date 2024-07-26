@@ -31,7 +31,7 @@ export default function generateStructure(structure) {
 			if (typeof child === "string") {
 				subChild = document.createTextNode(child);
 			} else if(child instanceof Component){
-				subChild = generateStructure(child.display());
+				subChild = generateStructure(child.render());
 			} else {
 				subChild = generateStructure(child);
 			}
