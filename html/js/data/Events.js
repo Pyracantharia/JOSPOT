@@ -1,5 +1,5 @@
-export default async function events(sport = "") {
-    const apiUrl = 'https://data.paris2024.org/api/explore/v2.1/catalog/datasets/paris-2024-sites-de-competition/records?limit=60';
+export default async function events() { // fonction "officielle" pour récupérer les épruves et leur emplacement
+    const apiUrl = 'https://data.paris2024.org/api/explore/v2.1/catalog/datasets/paris-2024-sites-de-competition/records?limit=3';
 
     const response = await fetch(apiUrl);
     const data = await response.json();
@@ -11,7 +11,7 @@ export default async function events(sport = "") {
         // Get address from geo points
         let address = 'N/A';
         if (latitude && longitude) {
-            address = await getAddressFromCode(latitude, longitude);
+            // address = await getAddressFromCode(latitude, longitude);
         }
 
         return {
