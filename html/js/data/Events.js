@@ -10,7 +10,7 @@ export default async function events() { // fonction "officielle" pour récupér
         // Get address from geo points
         let address = 'N/A';
         if (latitude && longitude) {
-            // address = await getAddressFromCode(latitude, longitude);
+            address = await getAddressFromCode(latitude, longitude);
         }
 
         return {
