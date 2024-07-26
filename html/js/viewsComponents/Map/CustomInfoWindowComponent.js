@@ -1,16 +1,30 @@
 import Component from "../../core/Component.js";
+import generateSingleLogicalBestSpots from "../../components/BestSpots.js";
 
-export default class CustomInfoWindowComponent extends Component{
-    constructor(props){
+export default class CustomInfoWindowComponent extends Component {
+    constructor(props) {
         super(props);
+
     }
 
-    handleClick(){
-        this.props.onClick(this.props.event)
-        document.querySelector("#detail-section").classList.toggle("hidden");
+
+
+    handleClick() {
+    //    this.props.onClick(this.props.event)
+    //    document.querySelector("#detail-section").classList.toggle("hidden");
+        console.log("lat: ", this.props.event.latitude, "lng: ", this.props.event.longitude);
+
+        console.log(this.props.map);
+
+        setTimeout(() => {
+            console.log("Retardée d'une seconde.");
+            generateSingleLogicalBestSpots(this.props.map, this.props.event.longitude, this.props.event.latitude);
+        }, "1 seconde");
+
+
     }
 
-    render(){
+    render() {
         return {
             tag: "div",
             attributes: {

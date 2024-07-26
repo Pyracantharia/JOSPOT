@@ -7,8 +7,8 @@ services:
       - "443:443"
     volumes:
       - ./html:/var/www/html/
-      - ./server/000-default.conf:/etc/apache2/sites-available/000-default.conf
-      - ./server/apache2.conf:/etc/apache2/apache2.conf
+      # - ./server/000-default.conf:/etc/apache2/sites-available/000-default.conf
+      # - ./server/apache2.conf:/etc/apache2/apache2.conf
       - ./server/php.ini:/usr/local/etc/php/php.ini
       - ./server/cert/ssl-cert-snakeoil.pem:/etc/ssl/certs/ssl-cert-snakeoil.pem
       - ./server/key/ssl-cert-snakeoil.key:/etc/ssl/private/ssl-cert-snakeoil.key

@@ -3,7 +3,7 @@ import generateStructure from "../core/generateStructure.js";
 // import Info from "../core/Info.js";
 import CustomInfoWindowComponent from "../viewsComponents/Map/CustomInfoWindowComponent.js";
 
-async function attachInfo(marker, event, updateSelectedEvent, infoWindow){
+async function attachInfo(marker, event, updateSelectedEvent, infoWindow , map){
     // const CustomInfoWindow = await getCustomInfoWindow();
     // const div = Info.getDiv(event.sports, event.address, "img/basket.jpg");
     // const customInfoWindow = new CustomInfoWindow(div);
@@ -15,7 +15,9 @@ async function attachInfo(marker, event, updateSelectedEvent, infoWindow){
             hour: event.hour,
             img: "img/basket.jpg",
             event: event,
-            onClick: updateSelectedEvent
+            onClick: updateSelectedEvent,
+            map : map,
+            test : "caca"
         })
 
         const infoWindowElement = generateStructure(customInfoWindow.render());
@@ -38,7 +40,7 @@ export default function generateMarkers(events, map, AdvancedMarkerElement, upda
 
             });
 
-            attachInfo(marker, event, updateSelectedEvent, infoWindow)
+            attachInfo(marker, event, updateSelectedEvent, infoWindow, map);
         }
     });
 }
